@@ -1,15 +1,14 @@
 {
-  "name": "fb-webhook-verify",
+  "name": "fb-webhook-chatbot",
   "version": "1.0.0",
+  "main": "server.js",
   "type": "module",
-  "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.18.2"
-  },
-  "engines": {
-    "node": ">=18"
+    "axios": "^1.6.0",
+    "express": "^4.18.2",
+    "body-parser": "^1.20.2"
   }
 }
