@@ -2,10 +2,11 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
 
-const app = express().use(bodyParser.json());
+const app = express();
+app.use(bodyParser.json());
 
 // ==============================
-// TOKENS
+// ENV
 // ==============================
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
@@ -14,7 +15,7 @@ const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 // ==============================
-// VERIFY WEBHOOK
+// VERIFY WEBHOOK (META)
 // ==============================
 app.get("/webhook", (req, res) => {
   const mode = req.query["hub.mode"];
@@ -28,29 +29,32 @@ app.get("/webhook", (req, res) => {
 });
 
 // ==============================
-// RECEIVE FACEBOOK MESSAGE
+// RECEIVE MESSAGE FROM FACEBOOK
 // ==============================
 app.post("/webhook", async (req, res) => {
   const body = req.body;
 
   if (body.object === "page") {
-    body.entry.forEach(entry => {
-      entry.messaging.forEach(event => {
-        if (event.message?.is_echo) return;
-        if (!event.message?.text) return;
-        handleMessage(event.sender.id, event.message.text);
-      });
-    });
+    for (const entry of body.entry) {
+      for (const event of entry.messaging) {
+        // Bỏ qua echo
+        if (event.message && event.message.is_echo) continue;
+        if (!event.message || !event.message.text) continue;
+
+        await handleMessage(event.sender.id, event.message.text);
+      }
+    }
     return res.status(200).send("EVENT_RECEIVED");
   }
+
   return res.sendStatus(404);
 });
 
 // ==============================
-// OPENAI
+// OPENAI ASK
 // ==============================
 async function askAI(userText) {
-  const res = await axios.post(
+  const response = await axios.post(
     "https://api.openai.com/v1/chat/completions",
     {
       model: "gpt-4o-mini",
@@ -58,37 +62,30 @@ async function askAI(userText) {
       messages: [
         {
           role: "system",
-          content: `
-You are a customer support assistant.
-
-Reply ONLY in English.
-NEVER reply in Vietnamese.
-
-Style:
-- Short
-- Friendly
-- One question max
-
-Rules:
-- You may explain the support and disbursement process.
-- Do NOT promise approval.
-- Do NOT mention interest unless user asks.
-- ARC and ATM are for verification only.
-- ATM will be returned within 6–12 hours.
-`
+          content:
+            "You are a customer support assistant. " +
+            "Reply ONLY in English. NEVER reply in Vietnamese. " +
+            "Keep replies short, friendly, and ask at most one question. " +
+            "You may explain the support and disbursement process. " +
+            "Do NOT promise approval. Do NOT mention interest unless asked. " +
+            "ARC and ATM are for verification only. " +
+            "ATM will be returned within 6–12 hours."
         },
-        { role: "user", content: userText }
+        {
+          role: "user",
+          content: userText
+        }
       ]
     },
     {
       headers: {
-        Authorization: \`Bearer \${OPENAI_API_KEY}\`,
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
         "Content-Type": "application/json"
       }
     }
   );
 
-  return res.data.choices[0].message.content;
+  return response.data.choices[0].message.content;
 }
 
 // ==============================
@@ -97,10 +94,10 @@ Rules:
 async function handleMessage(sender_psid, text) {
   const msg = text.trim();
 
-  // Log all customer messages to Telegram
-  await sendToTelegram(`📩 FB: ${msg}`);
+  // Log khách lên Telegram
+  await sendToTelegram(`📩 FB MESSAGE:\n${msg}`);
 
-  // Detect address keywords → notify CSKH
+  // Detect địa chỉ → báo CSKH
   const isAddress =
     /taipei|new taipei|taichung|tainan|kaohsiung|city|district|street|road|jalan|kota|區|市|縣/i.test(
       msg
@@ -112,47 +109,59 @@ async function handleMessage(sender_psid, text) {
     );
   }
 
-  // AI reply
+  // AI trả lời
   let reply;
   try {
     reply = await askAI(msg);
-  } catch (e) {
+  } catch (err) {
+    console.error("AI ERROR:", err.message);
     reply =
       "We can help support and guide you through the process. How can we help you today?";
   }
 
-  sendMessage(sender_psid, { text: reply });
+  await sendMessage(sender_psid, reply);
 }
 
 // ==============================
-// SEND FACEBOOK MESSAGE
+// SEND MESSAGE TO FACEBOOK
 // ==============================
-function sendMessage(sender_psid, response) {
-  axios
-    .post(
+async function sendMessage(sender_psid, text) {
+  try {
+    await axios.post(
       "https://graph.facebook.com/v17.0/me/messages",
       {
         recipient: { id: sender_psid },
-        message: response
+        message: { text }
       },
-      { params: { access_token: PAGE_ACCESS_TOKEN } }
-    )
-    .catch(err =>
-      console.error("FB ERROR:", err.response?.data || err.message)
+      {
+        params: { access_token: PAGE_ACCESS_TOKEN }
+      }
     );
+  } catch (err) {
+    console.error("FB SEND ERROR:", err.response?.data || err.message);
+  }
 }
 
 // ==============================
-// TELEGRAM
+// SEND TELEGRAM
 // ==============================
-function sendToTelegram(text) {
-  return axios.post(
-    `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
-    { chat_id: TELEGRAM_CHAT_ID, text }
-  );
+async function sendToTelegram(text) {
+  try {
+    await axios.post(
+      `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+      {
+        chat_id: TELEGRAM_CHAT_ID,
+        text
+      }
+    );
+  } catch (err) {
+    console.error("TG ERROR:", err.message);
+  }
 }
 
 // ==============================
 // START SERVER
 // ==============================
-app.listen(3000, () => console.log("Server chạy rồi OK ✔"));
+app.listen(3000, () => {
+  console.log("Server chạy rồi OK ✔");
+});
