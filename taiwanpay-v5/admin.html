@@ -1,129 +1,31 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0a0a12" />
-  <title>TaiwanPay Admin V5</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    body { padding-bottom: 0; }
-    .bottom-nav { display: none; }
-  </style>
+  <meta charset="UTF-8">
+  <title>Admin TaiwanPay V5</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="admin-header">
-    <div class="admin-title">TaiwanPay Admin <small style="color:var(--muted);font-weight:400">V5</small></div>
-    <div style="display:flex;gap:0.5rem;align-items:center">
-      <div class="lang-bar" style="position:static;padding:0.25rem">
-        <button class="lang-btn" data-lang="vi" onclick="TP.setLang('vi')">VI</button>
-        <button class="lang-btn" data-lang="en" onclick="TP.setLang('en')">EN</button>
-        <button class="lang-btn" data-lang="zh" onclick="TP.setLang('zh')">繁中</button>
-      </div>
-      <a href="index.html" style="color:var(--muted);font-size:0.85rem;text-decoration:none">← Site</a>
+  <h1>Admin V5 - Hàng đợi đơn</h1>
+  <div class="admin-queue" id="queue">
+    <!-- Orders sorted by urgency: overdue, near expiry, waiting code, customer reported -->
+    <div class="order-row">
+      <span class="order-id">ORD-001</span>
+      <span>Quá hạn</span>
+      <button>Tạo TwPay Card</button>
     </div>
-  </header>
-
-  <div class="queue-list">
-    <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem">
-      Hàng đợi ưu tiên: <strong style="color:var(--danger)">Quá hạn</strong> →
-      <strong style="color:var(--warn)">Sắp hết hạn</strong> →
-      <strong style="color:var(--neon-purple)">Chờ gửi mã</strong> →
-      <strong style="color:var(--success)">Khách báo đã trả</strong>
-    </p>
-    <div id="admin-queue">
-      <!-- rendered by JS + fallback -->
-    </div>
+    <!-- More dynamic rows -->
   </div>
-
+  <div class="three-col">
+    <div>Cột 1: Thông tin đơn</div>
+    <div>Cột 2: Ảnh gốc + watermark go-vn (chỉ admin)</div>
+    <div>Cột 3: Hành động</div>
+  </div>
+  <div>
+    <p>Trên phiếu: 19:50 / Hết hạn: 10:50</p>
+    <button>Trừ 2 phút</button>
+    <button id="sendBtn">Gửi (việc còn thiếu hiện ở đây)</button>
+  </div>
   <script src="app.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      TP.applyI18n();
-      setTimeout(() => {
-        const list = document.getElementById('admin-queue');
-        if (list && list.children.length === 0) {
-          list.innerHTML = `
-            <div class="order-card overdue">
-              <div>
-                <div class="order-id">TP-261014-001</div>
-                <div class="order-meta">Quá hạn · NT$15,000</div>
-                <div class="order-times">
-                  <span>Trên phiếu: <strong>19:50</strong></span>
-                  <span>Hết hạn: <strong>10:50</strong></span>
-                </div>
-                <div class="missing">⚠ Thiếu ảnh ARC</div>
-                <div class="detail-grid">
-                  <div class="img-wrap">Ảnh gốc <span class="watermark">go-vn</span></div>
-                  <div class="img-wrap">Chỉ admin thấy</div>
-                  <div><button class="btn btn-secondary" style="margin:0;padding:0.4rem;font-size:0.75rem" onclick="TP.deduct2Min('TP-261014-001')">Trừ 2 phút</button></div>
-                </div>
-              </div>
-              <div class="order-actions">
-                <button class="btn" onclick="TP.createCard('TP-261014-001')">Tạo TwPay Card</button>
-                <div class="missing" style="text-align:right">Thiếu thông tin: Thiếu ảnh ARC</div>
-              </div>
-            </div>
-            <div class="order-card expiring">
-              <div>
-                <div class="order-id">TP-261014-002</div>
-                <div class="order-meta">Sắp hết hạn · NT$8,000</div>
-                <div class="order-times">
-                  <span>Trên phiếu: <strong>20:10</strong></span>
-                  <span>Hết hạn: <strong>11:05</strong></span>
-                </div>
-                <div class="detail-grid">
-                  <div class="img-wrap">Ảnh gốc <span class="watermark">go-vn</span></div>
-                  <div class="img-wrap">Chỉ admin thấy</div>
-                  <div><button class="btn btn-secondary" style="margin:0;padding:0.4rem;font-size:0.75rem" onclick="TP.deduct2Min('TP-261014-002')">Trừ 2 phút</button></div>
-                </div>
-              </div>
-              <div class="order-actions">
-                <button class="btn" onclick="TP.createCard('TP-261014-002')">Tạo TwPay Card</button>
-              </div>
-            </div>
-            <div class="order-card waiting">
-              <div>
-                <div class="order-id">TP-261014-003</div>
-                <div class="order-meta">Chờ gửi mã · NT$12,000</div>
-                <div class="order-times">
-                  <span>Trên phiếu: <strong>20:30</strong></span>
-                  <span>Hết hạn: <strong>11:30</strong></span>
-                </div>
-                <div class="missing">⚠ Chưa gửi mã</div>
-                <div class="detail-grid">
-                  <div class="img-wrap">Ảnh gốc <span class="watermark">go-vn</span></div>
-                  <div class="img-wrap">Chỉ admin thấy</div>
-                  <div><button class="btn btn-secondary" style="margin:0;padding:0.4rem;font-size:0.75rem" onclick="TP.deduct2Min('TP-261014-003')">Trừ 2 phút</button></div>
-                </div>
-              </div>
-              <div class="order-actions">
-                <button class="btn" onclick="TP.createCard('TP-261014-003')">Tạo TwPay Card</button>
-                <div class="missing" style="text-align:right">Thiếu thông tin: Chưa gửi mã</div>
-              </div>
-            </div>
-            <div class="order-card paid">
-              <div>
-                <div class="order-id">TP-261014-004</div>
-                <div class="order-meta">Khách báo đã trả · NT$5,000</div>
-                <div class="order-times">
-                  <span>Trên phiếu: <strong>19:00</strong></span>
-                  <span>Hết hạn: <strong>10:00</strong></span>
-                </div>
-                <div class="detail-grid">
-                  <div class="img-wrap">Ảnh gốc <span class="watermark">go-vn</span></div>
-                  <div class="img-wrap">Chỉ admin thấy</div>
-                  <div><button class="btn btn-secondary" style="margin:0;padding:0.4rem;font-size:0.75rem" onclick="TP.deduct2Min('TP-261014-004')">Trừ 2 phút</button></div>
-                </div>
-              </div>
-              <div class="order-actions">
-                <button class="btn" onclick="TP.confirmReceived('TP-261014-004')">Xác nhận đã nhận tiền</button>
-              </div>
-            </div>
-          `;
-        }
-      }, 200);
-    });
-  </script>
 </body>
 </html>

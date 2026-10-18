@@ -1,136 +1,30 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0a0a12" />
-  <title>TaiwanPay — Đổi tiền, gửi tiền về nhà</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaiwanPay - Gửi tiền Đài-Việt</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Language switcher -->
-  <div class="lang-bar">
-    <button class="lang-btn" data-lang="vi" onclick="TP.setLang('vi')">VI</button>
-    <button class="lang-btn" data-lang="en" onclick="TP.setLang('en')">EN</button>
-    <button class="lang-btn" data-lang="zh" onclick="TP.setLang('zh')">繁中</button>
-    <button class="lang-btn" data-lang="id" onclick="TP.setLang('id')">ID</button>
-    <button class="lang-btn" data-lang="th" onclick="TP.setLang('th')">TH</button>
-  </div>
-
-  <!-- PAGE: HOME -->
-  <div id="page-home" class="page active">
+  <header>
+    <div class="logo-container">
+      <div class="logo neon-purple">TaiwanPay</div>
+    </div>
+    <div class="taipei-101"></div>
+  </header>
+  <main>
     <section class="hero">
-      <div class="hero-bg"></div>
-      <div class="taipei101" aria-hidden="true"></div>
-      <div class="mist mist-1"></div>
-      <div class="mist mist-2"></div>
-      <div class="mist mist-3"></div>
-
-      <div class="logo-wrap">
-        <div class="logo">TaiwanPay</div>
-        <p class="logo-sub" data-i18n="logoSub">Đổi tiền · Gửi về nhà · Thanh toán tại Đài Loan</p>
+      <h1>Gửi tiền ngay từ Đài Loan về Việt Nam</h1>
+      <div class="iphones">
+        <div class="iphone orange"></div>
+        <div class="iphone orange offset"></div>
+        <div class="iphone orange"></div>
       </div>
-
-      <div class="phones" aria-hidden="true">
-        <div class="phone"><div class="phone-notch"></div><div class="phone-screen"></div></div>
-        <div class="phone"><div class="phone-notch"></div><div class="phone-screen"></div></div>
-        <div class="phone"><div class="phone-notch"></div><div class="phone-screen"></div></div>
-      </div>
-
-      <button class="cta" onclick="TP.showPage('page-exchange')">
-        <span data-i18n="cta">Gửi tiền ngay</span> →
-      </button>
+      <button class="btn-send orange-bright">Gửi tiền ngay</button>
     </section>
-  </div>
-
-  <!-- PAGE: EXCHANGE -->
-  <div id="page-exchange" class="page">
-    <div class="section">
-      <h2 class="section-title" data-i18n="exchange">Đổi tiền</h2>
-
-      <div class="dir-toggle">
-        <button class="dir-btn active" data-dir="twd-vnd" onclick="TP.setDirection('twd-vnd')" data-i18n="dirTwdVnd">Đài → Việt</button>
-        <button class="dir-btn" data-dir="vnd-twd" onclick="TP.setDirection('vnd-twd')" data-i18n="dirVndTwd">Việt → Đài</button>
-      </div>
-
-      <div class="card">
-        <div class="amount-display" id="amount-display">10,150 <small>NT$</small></div>
-        <div style="text-align:center;margin-bottom:0.8rem">
-          <span class="lock-badge">🔒 <span data-i18n="lockRate">Đã khóa báo giá</span></span>
-        </div>
-
-        <div class="row">
-          <span class="row-label" data-i18n="youPay">Bạn trả</span>
-          <span class="row-value" id="you-pay-val">10,150 NT$</span>
-        </div>
-        <div class="row">
-          <span class="row-label" data-i18n="fee">Phí</span>
-          <span class="row-value fee" id="fee-val">NT$150</span>
-        </div>
-        <div class="row">
-          <span class="row-label" data-i18n="recipient">Người nhận</span>
-          <span class="row-value" id="recipient-val">8,200,000 ₫</span>
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label data-i18n="amountLabel">Số tiền</label>
-        <input type="number" id="amount-input" value="10000" min="1000" step="100"
-               oninput="TP.onAmountInput(this.value)" />
-      </div>
-
-      <button class="btn" onclick="TP.showPage('page-card')" data-i18n="createOrder">Tạo lệnh đổi tiền</button>
-      <button class="btn btn-secondary" style="margin-top:0.6rem" onclick="TP.showPage('page-home')">← Home</button>
-    </div>
-  </div>
-
-  <!-- PAGE: PAYMENT CARD -->
-  <div id="page-card" class="page">
-    <div class="section">
-      <h2 class="section-title" data-i18n="paymentCard">Thẻ thanh toán</h2>
-
-      <div class="pay-card">
-        <h3 data-i18n="paymentCard">Thẻ thanh toán</h3>
-
-        <div class="barcode-box">
-          <!-- Code 39 barcodes (font-based) -->
-          <span class="barcode">*151001K5G*</span>
-          <div class="barcode-code">151001K5G</div>
-          <span class="barcode">*00MRT261001ARMJK*</span>
-          <div class="barcode-code">00MRT261001ARMJK</div>
-          <span class="barcode">*035782000001150*</span>
-          <div class="barcode-code">035782000001150</div>
-        </div>
-
-        <p class="pay-instruction" data-cashier>我要繳費，條碼在這裡。</p>
-
-        <div class="countdown" id="countdown">28:00</div>
-
-        <button class="btn btn-white" onclick="alert('Show to staff')">
-          <span data-i18n="showScreen">Đưa màn hình cho nhân viên</span>
-        </button>
-      </div>
-
-      <button class="btn btn-secondary" style="margin-top:1.2rem" onclick="TP.showPage('page-exchange')">← Back</button>
-    </div>
-  </div>
-
-  <!-- Bottom nav -->
-  <nav class="bottom-nav">
-    <button class="nav-item active" data-page="page-home" onclick="TP.showPage('page-home')">
-      <span>🏠</span><span data-i18n="navHome">Home</span>
-    </button>
-    <button class="nav-item" data-page="page-exchange" onclick="TP.showPage('page-exchange')">
-      <span>💱</span><span data-i18n="navExchange">Đổi tiền</span>
-    </button>
-    <button class="nav-item" data-page="page-card" onclick="TP.showPage('page-card')">
-      <span>📱</span><span data-i18n="navCard">Thẻ TT</span>
-    </button>
-    <button class="nav-item" onclick="location.href='admin.html'">
-      <span>⚙️</span><span data-i18n="admin">Admin</span>
-    </button>
-  </nav>
-
+    <div class="mist-decor"></div>
+  </main>
   <script src="app.js"></script>
 </body>
 </html>
