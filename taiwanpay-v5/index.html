@@ -5,26 +5,63 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TaiwanPay - Gửi tiền Đài-Việt</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
 </head>
 <body>
+  <div class="lang-selector">
+    <button onclick="setLanguage('vi')">VI</button>
+    <button onclick="setLanguage('en')">EN</button>
+    <button onclick="setLanguage('zh-TW')">繁中</button>
+    <button onclick="setLanguage('id')">ID</button>
+    <button onclick="setLanguage('th')">TH</button>
+  </div>
   <header>
     <div class="logo-container">
-      <div class="logo neon-purple">TaiwanPay</div>
+      <div class="logo neon-purple" data-i18n="logo">TaiwanPay</div>
     </div>
     <div class="taipei-101"></div>
   </header>
   <main>
-    <section class="hero">
-      <h1>Gửi tiền ngay từ Đài Loan về Việt Nam</h1>
+    <section class="hero" id="hero">
+      <h1 data-i18n="heroTitle">Gửi tiền ngay từ Đài Loan về Việt Nam</h1>
       <div class="iphones">
         <div class="iphone orange"></div>
         <div class="iphone orange offset"></div>
         <div class="iphone orange"></div>
       </div>
-      <button class="btn-send orange-bright">Gửi tiền ngay</button>
+      <button class="btn-send orange-bright" onclick="showExchange()" data-i18n="sendNow">Gửi tiền ngay</button>
+    </section>
+    <section class="exchange" id="exchange" style="display:none;">
+      <h2 data-i18n="exchangeTitle">Đổi tiền</h2>
+      <div class="direction-toggle">
+        <button onclick="setDirection('tw-vn')" data-i18n="twToVn">Đài → Việt</button>
+        <button onclick="setDirection('vn-tw')" data-i18n="vnToTw">Việt → Đài</button>
+      </div>
+      <div class="big-number" id="bigAmount">NT$ 10,000</div>
+      <div class="details">
+        <p><span data-i18n="youPay">Bạn trả</span>: <span id="youPay">NT$ 10,150</span></p>
+        <p><span data-i18n="fee">Phí NT$150</span></p>
+        <p><span data-i18n="receiver">Người nhận</span>: <span id="receiver">VND 7,500,000</span></p>
+      </div>
+      <button onclick="lockRate()" data-i18n="lockRate">Khóa báo giá</button>
+      <button onclick="showPayment()" data-i18n="proceed">Tiếp tục thanh toán</button>
+    </section>
+    <section class="payment-card" id="payment" style="display:none;">
+      <h2 data-i18n="paymentTitle">Thẻ thanh toán</h2>
+      <div class="barcode-container">
+        <svg id="barcode1"></svg>
+        <svg id="barcode2"></svg>
+        <svg id="barcode3"></svg>
+      </div>
+      <div class="countdown" id="countdown">29:59</div>
+      <button class="btn-white" onclick="alert(translations[currentLang].cashierPhrase || '我要繳費，條碼在這裡。')" data-i18n="showToStaff">Đưa màn hình cho nhân viên</button>
+      <p data-i18n="cashierNote">Câu thu ngân: 我要繳費，條碼在這裡。</p>
     </section>
     <div class="mist-decor"></div>
   </main>
+  <footer>
+    <a href="admin.html">Admin</a>
+  </footer>
   <script src="app.js"></script>
 </body>
 </html>

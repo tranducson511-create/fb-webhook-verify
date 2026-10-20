@@ -1,24 +1,29 @@
-# TaiwanPay V5 - Static Version
+# TaiwanPay V5 - Static HTML/CSS/JS Version
 
-## Files
-- index.html: Trang chủ với neon tím, Taipei 101 mờ, iPhones cam lệch 30 độ, nút cam rực, mist.
-- style.css: Styles cho các hiệu ứng.
-- app.js: Logic, đa ngôn ngữ (VI, EN, ZH-TW, ID, TH), exchange, countdown, admin queue.
-- admin.html: Admin V5 với hàng đợi ưu tiên, 3 cột, etc.
-- README.md: Hướng dẫn này.
+Bản tĩnh (không React/Node). Phù hợp Hostinger shared hosting PHP hiện tại.
 
-## Lưu ý quan trọng
-Site hiện tại là PHP trên Hostinger shared hosting (public_html).
-Không deploy React/Node nguyên bản. Đây là bản HTML/CSS/JS tĩnh.
+## Files đã tạo/cập nhật
+- `index.html`: Trang chủ đầy đủ (neon tím quanh logo, Taipei 101 bóng mờ mép phải, 3 hộp iPhone cam xếp lệch ~30°, nút Gửi tiền ngay cam rực, hình trang trí mờ như sương). Có section đổi tiền và thẻ thanh toán.
+- `style.css`: Styles neon, mist, iPhones, countdown, admin 3 cột, responsive.
+- `app.js`: Logic đổi tiền (số lớn lên trước, bạn trả / phí NT$150 / người nhận, khóa báo giá, cả hai chiều Đài-Việt), barcode Code 39 (151001K5G, 00MRT261001ARMJK, 035782000001150), đồng hồ đếm ngược đúng phút (dưới 30' cam, dưới 5' đỏ), đa ngôn ngữ tách khỏi logic, hàng đợi admin mock.
+- `admin.html`: Admin V5 - hàng đợi đơn gấp lên trước (quá hạn, sắp hết hạn, chờ gửi mã, khách báo đã trả), mã đơn đầu dòng, nút đổi theo việc, trang đơn 3 cột, ảnh gốc + watermark go-vn, hai giờ cạnh nhau, nút Trừ 2 phút ghi rõ, việc còn thiếu hiện ngay trên nút gửi.
+- `README.md`: Hướng dẫn này.
 
-API Hostinger chỉ đọc. FTP không kết nối từ xa. Dùng hPanel File Manager để upload.
+## 5 ngôn ngữ
+Tiếng Việt, English, 繁體中文, Bahasa Indonesia, ภาษาไทย. Câu thu ngân luôn tiếng Trung: 我要繳費，條碼在這裡。
+
+## LƯU Ý QUAN TRỌNG DEPLOY
+Site taiwanpayapp.com hiện tại là PHP trong public_html trên Hostinger shared hosting.
+Bản V5 này là HTML/CSS/JS tĩnh — KHÔNG deploy React/Node nguyên bản lên public_html.
+API Hostinger token chỉ ĐỌC, không ghi file. FTP cổng 21/22 không kết nối được từ xa.
+File Manager hPanel là cách duy nhất.
 
 ## Checklist 5 bước deploy
-1. Backup toàn bộ public_html hiện tại qua hPanel File Manager.
-2. Tải thư mục taiwanpay-v5/ từ GitHub về máy.
-3. Upload các file (index.html, style.css, app.js, admin.html) vào public_html/ (hoặc thư mục con) qua hPanel File Manager. Không dùng FTP.
-4. Kiểm tra trang chủ và admin trên browser. Clear cache nếu cần.
-5. Bật Cloudflare WAF, cấu hình rate limit server-side nếu có backend PHP, mã hóa PIN và log admin ở server.
+1. Backup toàn bộ public_html hiện tại qua hPanel File Manager (download zip).
+2. Tải thư mục taiwanpay-v5/ từ GitHub repo tranducson511-create/fb-webhook-verify về máy.
+3. Upload các file (index.html, style.css, app.js, admin.html) vào public_html/ (hoặc thư mục con nếu muốn giữ site cũ) qua hPanel File Manager. Không dùng FTP.
+4. Kiểm tra trang chủ (taiwanpayapp.com), trang đổi tiền, thẻ thanh toán, admin trên browser. Clear cache.
+5. Bật Cloudflare WAF. Cấu hình rate limit API 3 lần/giờ/IP, log admin, mã hóa PIN ở phía server (PHP hiện tại hoặc thêm endpoint).
 
 ## Bảo mật
 - Cloudflare WAF
@@ -26,6 +31,4 @@ API Hostinger chỉ đọc. FTP không kết nối từ xa. Dùng hPanel File Ma
 - Log admin
 - Mã hóa PIN
 
-Câu thu ngân luôn tiếng Trung: 我要繳費，條碼在這裡。
-
-Đẩy từ repo: tranducson511-create/fb-webhook-verify /taiwanpay-v5/
+Repo: https://github.com/tranducson511-create/fb-webhook-verify/tree/main/taiwanpay-v5

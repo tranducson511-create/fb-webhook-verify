@@ -6,26 +6,28 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Admin V5 - Hàng đợi đơn</h1>
+  <h1>Admin V5 - Hàng đợi đơn gấp lên trước</h1>
   <div class="admin-queue" id="queue">
-    <!-- Orders sorted by urgency: overdue, near expiry, waiting code, customer reported -->
-    <div class="order-row">
-      <span class="order-id">ORD-001</span>
-      <span>Quá hạn</span>
-      <button>Tạo TwPay Card</button>
-    </div>
-    <!-- More dynamic rows -->
+    <!-- Sorted: quá hạn, sắp hết hạn, chờ gửi mã, khách báo đã trả -->
   </div>
   <div class="three-col">
-    <div>Cột 1: Thông tin đơn</div>
-    <div>Cột 2: Ảnh gốc + watermark go-vn (chỉ admin)</div>
-    <div>Cột 3: Hành động</div>
+    <div>
+      <h3>Thông tin đơn</h3>
+      <p>Mã đơn: ORD-001</p>
+      <p>Trạng thái: Quá hạn</p>
+    </div>
+    <div>
+      <h3>Ảnh gốc + watermark go-vn (chỉ admin)</h3>
+      <p style="background:#eee;color:#333;padding:20px;text-align:center;">[Original Image]<br>Watermark: go-vn</p>
+    </div>
+    <div>
+      <h3>Hành động</h3>
+      <p>Trên phiếu: 19:50 / Hết hạn: 10:50</p>
+      <button onclick="subtractMinutes()">Trừ 2 phút (ghi rõ)</button>
+      <button id="sendBtn" onclick="alert('Việc còn thiếu: Tạo TwPay Card')">Gửi (việc còn thiếu hiện ngay trên nút)</button>
+    </div>
   </div>
-  <div>
-    <p>Trên phiếu: 19:50 / Hết hạn: 10:50</p>
-    <button>Trừ 2 phút</button>
-    <button id="sendBtn">Gửi (việc còn thiếu hiện ở đây)</button>
-  </div>
+  <p style="text-align:center;"><a href="index.html">Về trang chủ</a></p>
   <script src="app.js"></script>
 </body>
 </html>
