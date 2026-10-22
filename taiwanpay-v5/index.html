@@ -38,10 +38,11 @@
         <button onclick="setDirection('vn-tw')" data-i18n="vnToTw">Việt → Đài</button>
       </div>
       <div class="big-number" id="bigAmount">NT$ 10,000</div>
+      <input type="number" id="amountInput" value="10000" oninput="updateExchange()" style="font-size:24px;padding:10px;width:200px;text-align:center;margin:10px;">
       <div class="details">
         <p><span data-i18n="youPay">Bạn trả</span>: <span id="youPay">NT$ 10,150</span></p>
         <p><span data-i18n="fee">Phí NT$150</span></p>
-        <p><span data-i18n="receiver">Người nhận</span>: <span id="receiver">VND 7,500,000</span></p>
+        <p><span data-i18n="receiver">Người nhận</span>: <span id="receiver">VND 8,200,000</span></p>
       </div>
       <button onclick="lockRate()" data-i18n="lockRate">Khóa báo giá</button>
       <button onclick="showPayment()" data-i18n="proceed">Tiếp tục thanh toán</button>
@@ -54,7 +55,7 @@
         <svg id="barcode3"></svg>
       </div>
       <div class="countdown" id="countdown">29:59</div>
-      <button class="btn-white" onclick="alert(translations[currentLang].cashierPhrase || '我要繳費，條碼在這裡。')" data-i18n="showToStaff">Đưa màn hình cho nhân viên</button>
+      <button class="btn-white" onclick="showCashierPhrase()" data-i18n="showToStaff">Đưa màn hình cho nhân viên</button>
       <p data-i18n="cashierNote">Câu thu ngân: 我要繳費，條碼在這裡。</p>
     </section>
     <div class="mist-decor"></div>

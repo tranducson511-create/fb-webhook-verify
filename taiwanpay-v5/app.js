@@ -90,6 +90,7 @@ const translations = {
 let currentLang = 'vi';
 let direction = 'tw-vn';
 let locked = false;
+const RATE = 820; // mock 1 NT$ = 820 VND
 
 function setLanguage(lang) {
   currentLang = lang;
@@ -108,15 +109,17 @@ function setDirection(dir) {
 }
 
 function updateExchange() {
-  // Mock rates. Big numbers first.
+  const input = document.getElementById('amountInput');
+  let amount = parseInt(input.value) || 0;
   if (direction === 'tw-vn') {
-    document.getElementById('bigAmount').textContent = 'NT$ 10,000';
-    document.getElementById('youPay').textContent = 'NT$ 10,150';
-    document.getElementById('receiver').textContent = 'VND 7,500,000';
+    document.getElementById('bigAmount').textContent = `NT$ ${amount.toLocaleString()}`;
+    document.getElementById('youPay').textContent = `NT$ ${(amount + 150).toLocaleString()}`;
+    document.getElementById('receiver').textContent = `VND ${(amount * RATE).toLocaleString()}`;
   } else {
-    document.getElementById('bigAmount').textContent = 'VND 7,500,000';
-    document.getElementById('youPay').textContent = 'VND 7,650,000';
-    document.getElementById('receiver').textContent = 'NT$ 10,000';
+    document.getElementById('bigAmount').textContent = `VND ${amount.toLocaleString()}`;
+    const nt = Math.floor(amount / RATE);
+    document.getElementById('youPay').textContent = `VND ${amount.toLocaleString()}`;
+    document.getElementById('receiver').textContent = `NT$ ${Math.max(0, nt - 150).toLocaleString()}`;
   }
 }
 
@@ -140,8 +143,11 @@ function showPayment() {
   startCountdown(29);
 }
 
+function showCashierPhrase() {
+  alert(translations[currentLang].cashierPhrase || '我要繳費，條碼在這裡。');
+}
+
 function generateBarcodes() {
-  // One image with 3 Code 39 barcodes
   JsBarcode("#barcode1", "151001K5G", { format: "CODE39", width: 2, height: 60, displayValue: true });
   JsBarcode("#barcode2", "00MRT261001ARMJK", { format: "CODE39", width: 2, height: 60, displayValue: true });
   JsBarcode("#barcode3", "035782000001150", { format: "CODE39", width: 2, height: 60, displayValue: true });
@@ -166,18 +172,18 @@ function startCountdown(minutes) {
   }, 1000);
 }
 
-// Admin mock
+// Admin mock - priority: overdue > expiring > waiting code > customer reported paid
 const mockOrders = [
-  { id: 'ORD-001', status: 'Quá hạn', priority: 4, task: 'Tạo TwPay Card' },
-  { id: 'ORD-002', status: 'Sắp hết hạn', priority: 3, task: 'Nhắc khách' },
-  { id: 'ORD-003', status: 'Chờ gửi mã', priority: 2, task: 'Tạo TwPay Card' },
-  { id: 'ORD-004', status: 'Khách báo đã trả', priority: 1, task: 'Xác nhận đã nhận tiền' }
+  { id: 'TP-261022-001', status: 'Quá hạn', priority: 4, task: 'Tạo TwPay Card', missing: 'Thiếu ảnh ARC' },
+  { id: 'TP-261022-002', status: 'Sắp hết hạn', priority: 3, task: 'Nhắc khách', missing: '' },
+  { id: 'TP-261022-003', status: 'Chờ gửi mã', priority: 2, task: 'Tạo TwPay Card', missing: 'Chưa gửi mã' },
+  { id: 'TP-261022-004', status: 'Khách báo đã trả', priority: 1, task: 'Xác nhận đã nhận tiền', missing: '' }
 ];
 
 function renderAdminQueue() {
   const queue = document.getElementById('queue');
   if (!queue) return;
-  const sorted = mockOrders.sort((a, b) => b.priority - a.priority);
+  const sorted = [...mockOrders].sort((a, b) => b.priority - a.priority);
   queue.innerHTML = sorted.map(o => `
     <div class="order-row">
       <span class="order-id">${o.id}</span>
@@ -188,10 +194,10 @@ function renderAdminQueue() {
 }
 
 function subtractMinutes() {
-  alert('Trừ 2 phút - đã cập nhật thời gian');
+  alert('Trừ 2 phút - đã cập nhật thời gian hết hạn');
 }
 
-// Security notes (implement server-side):
+// Security notes (implement server-side on Hostinger PHP):
 // - Cloudflare WAF
 // - Rate limit API 3 times/hour/IP
 // - Admin logs

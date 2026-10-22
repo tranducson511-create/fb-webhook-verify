@@ -3,9 +3,9 @@
 Bản tĩnh (không React/Node). Phù hợp Hostinger shared hosting PHP hiện tại.
 
 ## Files đã tạo/cập nhật
-- `index.html`: Trang chủ đầy đủ (neon tím quanh logo, Taipei 101 bóng mờ mép phải, 3 hộp iPhone cam xếp lệch ~30°, nút Gửi tiền ngay cam rực, hình trang trí mờ như sương). Có section đổi tiền và thẻ thanh toán.
+- `index.html`: Trang chủ đầy đủ (neon tím quanh logo, Taipei 101 bóng mờ mép phải, 3 hộp iPhone cam xếp lệch ~30°, nút Gửi tiền ngay cam rực, hình trang trí mờ như sương). Có section đổi tiền (input số tiền động) và thẻ thanh toán.
 - `style.css`: Styles neon, mist, iPhones, countdown, admin 3 cột, responsive.
-- `app.js`: Logic đổi tiền (số lớn lên trước, bạn trả / phí NT$150 / người nhận, khóa báo giá, cả hai chiều Đài-Việt), barcode Code 39 (151001K5G, 00MRT261001ARMJK, 035782000001150), đồng hồ đếm ngược đúng phút (dưới 30' cam, dưới 5' đỏ), đa ngôn ngữ tách khỏi logic, hàng đợi admin mock.
+- `app.js`: Logic đổi tiền (số lớn lên trước, bạn trả / phí NT$150 / người nhận, khóa báo giá, cả hai chiều Đài-Việt), barcode Code 39 (151001K5G, 00MRT261001ARMJK, 035782000001150), đồng hồ đếm ngược đúng phút (dưới 30' cam, dưới 5' đỏ), đa ngôn ngữ tách khỏi logic, hàng đợi admin mock ưu tiên.
 - `admin.html`: Admin V5 - hàng đợi đơn gấp lên trước (quá hạn, sắp hết hạn, chờ gửi mã, khách báo đã trả), mã đơn đầu dòng, nút đổi theo việc, trang đơn 3 cột, ảnh gốc + watermark go-vn, hai giờ cạnh nhau, nút Trừ 2 phút ghi rõ, việc còn thiếu hiện ngay trên nút gửi.
 - `README.md`: Hướng dẫn này.
 
