@@ -1,4 +1,4 @@
-// Translations - separated from logic. Cashier phrase always Chinese.
+// Translations - separated from logic. Cashier phrase ALWAYS Chinese.
 const translations = {
   vi: {
     logo: "TaiwanPay",
@@ -125,7 +125,7 @@ function updateExchange() {
 
 function lockRate() {
   locked = true;
-  alert(translations[currentLang].lockRate + ' OK');
+  alert(translations[currentLang].lockRate + ' - Đã khóa');
 }
 
 function showExchange() {
@@ -144,13 +144,14 @@ function showPayment() {
 }
 
 function showCashierPhrase() {
-  alert(translations[currentLang].cashierPhrase || '我要繳費，條碼在這裡。');
+  // Always Chinese for cashier
+  alert('我要繳費，條碼在這裡。');
 }
 
 function generateBarcodes() {
-  JsBarcode("#barcode1", "151001K5G", { format: "CODE39", width: 2, height: 60, displayValue: true });
-  JsBarcode("#barcode2", "00MRT261001ARMJK", { format: "CODE39", width: 2, height: 60, displayValue: true });
-  JsBarcode("#barcode3", "035782000001150", { format: "CODE39", width: 2, height: 60, displayValue: true });
+  JsBarcode("#barcode1", "151001K5G", { format: "CODE39", width: 2, height: 70, displayValue: true, fontSize: 14 });
+  JsBarcode("#barcode2", "00MRT261001ARMJK", { format: "CODE39", width: 2, height: 70, displayValue: true, fontSize: 14 });
+  JsBarcode("#barcode3", "035782000001150", { format: "CODE39", width: 2, height: 70, displayValue: true, fontSize: 14 });
 }
 
 function startCountdown(minutes) {
@@ -168,16 +169,17 @@ function startCountdown(minutes) {
     if (remaining < 0) {
       clearInterval(interval);
       el.textContent = '00:00';
+      el.classList.add('red');
     }
   }, 1000);
 }
 
-// Admin mock - priority: overdue > expiring > waiting code > customer reported paid
+// Admin mock - priority: overdue > expiring soon > waiting code > customer reported paid
 const mockOrders = [
-  { id: 'TP-261022-001', status: 'Quá hạn', priority: 4, task: 'Tạo TwPay Card', missing: 'Thiếu ảnh ARC' },
-  { id: 'TP-261022-002', status: 'Sắp hết hạn', priority: 3, task: 'Nhắc khách', missing: '' },
-  { id: 'TP-261022-003', status: 'Chờ gửi mã', priority: 2, task: 'Tạo TwPay Card', missing: 'Chưa gửi mã' },
-  { id: 'TP-261022-004', status: 'Khách báo đã trả', priority: 1, task: 'Xác nhận đã nhận tiền', missing: '' }
+  { id: 'TP-261024-001', status: 'Quá hạn', priority: 4, task: 'Tạo TwPay Card', missing: 'Thiếu ảnh ARC' },
+  { id: 'TP-261024-002', status: 'Sắp hết hạn', priority: 3, task: 'Nhắc khách', missing: '' },
+  { id: 'TP-261024-003', status: 'Chờ gửi mã', priority: 2, task: 'Tạo TwPay Card', missing: 'Chưa gửi mã' },
+  { id: 'TP-261024-004', status: 'Khách báo đã trả', priority: 1, task: 'Xác nhận đã nhận tiền', missing: '' }
 ];
 
 function renderAdminQueue() {
@@ -188,24 +190,28 @@ function renderAdminQueue() {
     <div class="order-row">
       <span class="order-id">${o.id}</span>
       <span>${o.status}</span>
-      <button onclick="alert('${o.task}')">${o.task}</button>
+      <button onclick="alert('${o.task}${o.missing ? ' - ' + o.missing : ''}')">${o.task}</button>
     </div>
   `).join('');
 }
 
 function subtractMinutes() {
-  alert('Trừ 2 phút - đã cập nhật thời gian hết hạn');
+  alert('Trừ 2 phút - đã cập nhật thời gian hết hạn (trên phiếu / hết hạn)');
 }
 
-// Security notes (implement server-side on Hostinger PHP):
-// - Cloudflare WAF
-// - Rate limit API 3 times/hour/IP
-// - Admin logs
-// - PIN encryption
+function showMissingOnSend() {
+  const missing = mockOrders[0].missing || 'Không thiếu';
+  alert('Việc còn thiếu: ' + missing);
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   setLanguage(currentLang);
   if (document.getElementById('queue')) {
     renderAdminQueue();
+  }
+  const sendBtn = document.getElementById('sendBtn');
+  if (sendBtn) {
+    sendBtn.onclick = showMissingOnSend;
+    sendBtn.textContent = 'Gửi (Thiếu: ' + (mockOrders[0].missing || 'OK') + ')';
   }
 });
