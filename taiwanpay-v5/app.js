@@ -149,9 +149,10 @@ function showCashierPhrase() {
 }
 
 function generateBarcodes() {
-  JsBarcode("#barcode1", "151001K5G", { format: "CODE39", width: 2, height: 70, displayValue: true, fontSize: 14 });
-  JsBarcode("#barcode2", "00MRT261001ARMJK", { format: "CODE39", width: 2, height: 70, displayValue: true, fontSize: 14 });
-  JsBarcode("#barcode3", "035782000001150", { format: "CODE39", width: 2, height: 70, displayValue: true, fontSize: 14 });
+  // Generate 3 Code39 into one container (treated as single image area)
+  JsBarcode("#barcode1", "151001K5G", { format: "CODE39", width: 1.8, height: 60, displayValue: true, fontSize: 12, margin: 5 });
+  JsBarcode("#barcode2", "00MRT261001ARMJK", { format: "CODE39", width: 1.6, height: 60, displayValue: true, fontSize: 12, margin: 5 });
+  JsBarcode("#barcode3", "035782000001150", { format: "CODE39", width: 1.8, height: 60, displayValue: true, fontSize: 12, margin: 5 });
 }
 
 function startCountdown(minutes) {
@@ -211,7 +212,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   const sendBtn = document.getElementById('sendBtn');
   if (sendBtn) {
+    const missingText = mockOrders[0].missing || 'OK';
     sendBtn.onclick = showMissingOnSend;
-    sendBtn.textContent = 'Gửi (Thiếu: ' + (mockOrders[0].missing || 'OK') + ')';
+    sendBtn.textContent = 'Gửi (' + missingText + ')';
   }
 });
