@@ -2,37 +2,39 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin TaiwanPay V5</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1 style="text-align:center;padding:30px 10px 10px;">Admin V5 - Hàng đợi đơn gấp lên trước</h1>
-  <p style="text-align:center;opacity:0.8;">Ưu tiên: Quá hạn → Sắp hết hạn → Chờ gửi mã → Khách báo đã trả</p>
+  <div class="mist-decor"></div>
+  <h1 style="text-align:center;padding:40px 10px 10px;position:relative;z-index:1;">Admin V5 - Hàng đợi đơn gấp lên trước</h1>
+  <p style="text-align:center;opacity:0.85;position:relative;z-index:1;">Ưu tiên: Quá hạn → Sắp hết hạn → Chờ gửi mã → Khách báo đã trả</p>
   <div class="admin-queue" id="queue">
     <!-- Rendered by app.js -->
   </div>
-  <div class="three-col">
+  <div class="three-col" id="orderDetail" style="display:none;">
     <div>
       <h3>Thông tin đơn</h3>
-      <p><strong>Mã đơn:</strong> TP-261024-001</p>
-      <p><strong>Trạng thái:</strong> Quá hạn</p>
-      <p>Nút đổi theo việc: Tạo TwPay Card / Xác nhận đã nhận tiền / Nhắc khách</p>
+      <p><strong>Mã đơn:</strong> <span id="detailId"></span></p>
+      <p><strong>Trạng thái:</strong> <span id="detailStatus"></span></p>
+      <p id="detailTask"></p>
     </div>
     <div>
       <h3>Ảnh gốc + watermark go-vn (chỉ admin thấy)</h3>
-      <div style="background:#eee;color:#333;padding:30px;text-align:center;border-radius:8px;min-height:120px;">
+      <div class="admin-image">
         [Ảnh gốc]<br><strong>Watermark: go-vn</strong>
       </div>
     </div>
     <div>
       <h3>Hành động</h3>
-      <p style="font-size:18px;"><strong>Trên phiếu:</strong> 19:50 &nbsp;&nbsp; / &nbsp;&nbsp; <strong>Hết hạn:</strong> 10:50</p>
-      <button onclick="subtractMinutes()" style="padding:10px 16px;margin:8px;border-radius:8px;background:#ff8c00;color:#fff;border:none;cursor:pointer;">Trừ 2 phút (ghi rõ)</button>
+      <p style="font-size:18px;"><strong>Trên phiếu:</strong> <span id="slipTime">19:50</span> &nbsp;&nbsp; / &nbsp;&nbsp; <strong>Hết hạn:</strong> <span id="expireTime">10:50</span></p>
+      <button onclick="TP.subtractMinutes()" class="btn-orange-sm">Trừ 2 phút (ghi rõ)</button>
       <br>
-      <button id="sendBtn" style="padding:12px 20px;margin:8px;border-radius:8px;background:#a020f0;color:#fff;border:none;cursor:pointer;font-weight:bold;">Gửi (việc còn thiếu hiện ngay trên nút)</button>
+      <button id="sendBtn" class="btn-purple-sm">Gửi</button>
     </div>
   </div>
-  <p style="text-align:center;padding:20px;"><a href="index.html" style="color:#c080ff;">Về trang chủ</a></p>
+  <p style="text-align:center;padding:30px;position:relative;z-index:1;"><a href="index.html" style="color:#c080ff;font-size:18px;">Về trang chủ</a></p>
   <script src="app.js"></script>
 </body>
 </html>

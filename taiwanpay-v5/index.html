@@ -3,21 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TaiwanPay - Gửi tiền Đài-Việt</title>
+  <title>TaiwanPay - Gửi tiền Đài-Việt | Taiwan Pay</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
 </head>
 <body>
+  <div class="mist-decor"></div>
   <div class="lang-selector">
-    <button onclick="setLanguage('vi')">VI</button>
-    <button onclick="setLanguage('en')">EN</button>
-    <button onclick="setLanguage('zh-TW')">繁中</button>
-    <button onclick="setLanguage('id')">ID</button>
-    <button onclick="setLanguage('th')">TH</button>
+    <button onclick="TP.setLang('vi')">VI</button>
+    <button onclick="TP.setLang('en')">EN</button>
+    <button onclick="TP.setLang('zh-TW')">繁中</button>
+    <button onclick="TP.setLang('id')">ID</button>
+    <button onclick="TP.setLang('th')">TH</button>
   </div>
   <header>
     <div class="logo-container">
       <div class="logo neon-purple" data-i18n="logo">TaiwanPay</div>
+      <p class="logo-sub" data-i18n="logoSub">Đổi tiền · Gửi về nhà · Thanh toán tại Đài Loan</p>
     </div>
     <div class="taipei-101"></div>
   </header>
@@ -29,23 +31,24 @@
         <div class="iphone orange offset"></div>
         <div class="iphone orange"></div>
       </div>
-      <button class="btn-send orange-bright" onclick="showExchange()" data-i18n="sendNow">Gửi tiền ngay</button>
+      <button class="btn-send orange-bright" onclick="TP.showExchange()" data-i18n="sendNow">Gửi tiền ngay</button>
     </section>
     <section class="exchange" id="exchange" style="display:none;">
       <h2 data-i18n="exchangeTitle">Đổi tiền</h2>
       <div class="direction-toggle">
-        <button onclick="setDirection('tw-vn')" data-i18n="twToVn">Đài → Việt</button>
-        <button onclick="setDirection('vn-tw')" data-i18n="vnToTw">Việt → Đài</button>
+        <button id="btn-tw-vn" class="active" onclick="TP.setDirection('tw-vn')" data-i18n="twToVn">Đài → Việt</button>
+        <button id="btn-vn-tw" onclick="TP.setDirection('vn-tw')" data-i18n="vnToTw">Việt → Đài</button>
       </div>
       <div class="big-number" id="bigAmount">NT$ 10,000</div>
-      <input type="number" id="amountInput" value="10000" oninput="updateExchange()" style="font-size:24px;padding:10px;width:220px;text-align:center;margin:10px;border-radius:8px;border:none;">
+      <input type="number" id="amountInput" value="10000" oninput="TP.updateExchange()" style="font-size:24px;padding:12px;width:240px;text-align:center;margin:12px;border-radius:10px;border:none;background:rgba(255,255,255,0.15);color:#fff;">
       <div class="details">
         <p><span data-i18n="youPay">Bạn trả</span>: <span id="youPay">NT$ 10,150</span></p>
-        <p><span data-i18n="fee">Phí NT$150</span></p>
+        <p data-i18n="fee">Phí NT$150</p>
         <p><span data-i18n="receiver">Người nhận</span>: <span id="receiver">VND 8,200,000</span></p>
       </div>
-      <button onclick="lockRate()" data-i18n="lockRate" style="margin:10px;padding:12px 24px;border-radius:8px;background:#a020f0;color:#fff;border:none;cursor:pointer;">Khóa báo giá</button>
-      <button onclick="showPayment()" data-i18n="proceed" style="margin:10px;padding:12px 24px;border-radius:8px;background:#ff4500;color:#fff;border:none;cursor:pointer;">Tiếp tục thanh toán</button>
+      <button onclick="TP.lockRate()" data-i18n="lockRate" class="btn-purple">Khóa báo giá</button>
+      <button onclick="TP.showPayment()" data-i18n="proceed" class="btn-orange">Tiếp tục thanh toán</button>
+      <p id="rateStatus" style="margin-top:15px;opacity:0.8;"></p>
     </section>
     <section class="payment-card" id="payment" style="display:none;">
       <h2 data-i18n="paymentTitle">Thẻ thanh toán</h2>
@@ -54,14 +57,13 @@
         <svg id="barcode2"></svg>
         <svg id="barcode3"></svg>
       </div>
-      <div class="countdown" id="countdown">29:59</div>
-      <button class="btn-white" onclick="showCashierPhrase()" data-i18n="showToStaff">Đưa màn hình cho nhân viên</button>
-      <p data-i18n="cashierNote">Câu thu ngân: 我要繳費，條碼在這裡。</p>
+      <div class="countdown" id="countdown">29:00</div>
+      <button class="btn-white" onclick="TP.showCashierPhrase()" data-i18n="showToStaff">Đưa màn hình cho nhân viên</button>
+      <p class="cashier-phrase">我要繳費，條碼在這裡。</p>
     </section>
-    <div class="mist-decor"></div>
   </main>
   <footer>
-    <a href="admin.html">Admin</a>
+    <a href="admin.html">Admin</a> · TaiwanPay V5 Static
   </footer>
   <script src="app.js"></script>
 </body>
