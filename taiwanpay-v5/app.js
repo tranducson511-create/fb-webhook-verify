@@ -86,7 +86,7 @@ const translations = {
 let currentLang = localStorage.getItem('tp_lang') || 'vi';
 let direction = 'tw-vn';
 let locked = false;
-const RATE = 820; // mock 1 NT$ = 820 VND
+const RATE = 820;
 let countdownInterval = null;
 
 const TP = {
@@ -144,14 +144,32 @@ const TP = {
     TP.startCountdown(29);
   },
   showCashierPhrase() {
-    // Always Chinese for cashier — never translated
     alert('我要繳費，條碼在這裡。');
   },
   generateBarcodes() {
     if (typeof JsBarcode === 'undefined') return;
-    JsBarcode("#barcode1", "151001K5G", { format: "CODE39", width: 1.7, height: 55, displayValue: true, fontSize: 11, margin: 4 });
-    JsBarcode("#barcode2", "00MRT261001ARMJK", { format: "CODE39", width: 1.5, height: 55, displayValue: true, fontSize: 11, margin: 4 });
-    JsBarcode("#barcode3", "035782000001150", { format: "CODE39", width: 1.7, height: 55, displayValue: true, fontSize: 11, margin: 4 });
+    const canvas = document.getElementById('barcodeCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const codes = [
+      { value: '151001K5G' },
+      { value: '00MRT261001ARMJK' },
+      { value: '035782000001150' }
+    ];
+    codes.forEach((c, i) => {
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      document.body.appendChild(svg);
+      JsBarcode(svg, c.value, { format: "CODE39", width: 1.6, height: 50, displayValue: true, fontSize: 10, margin: 2 });
+      const data = new XMLSerializer().serializeToString(svg);
+      const img = new Image();
+      img.onload = () => {
+        ctx.drawImage(img, 20, 10 + i * 85, 360, 70);
+        document.body.removeChild(svg);
+      };
+      img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(data)));
+    });
   },
   startCountdown(minutes) {
     if (countdownInterval) clearInterval(countdownInterval);
@@ -175,7 +193,6 @@ const TP = {
   }
 };
 
-// Admin mock - priority: overdue > expiring soon > waiting code > customer reported paid
 const mockOrders = [
   { id: 'TP-261024-001', status: 'Quá hạn', priority: 4, task: 'Tạo TwPay Card', missing: 'Thiếu ảnh ARC', slip: '19:50', expire: '10:50' },
   { id: 'TP-261024-002', status: 'Sắp hết hạn', priority: 3, task: 'Nhắc khách', missing: '', slip: '20:10', expire: '11:10' },
