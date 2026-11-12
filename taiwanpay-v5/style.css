@@ -1,3 +1,4 @@
+/* TaiwanPay V5 Styles */
 body {
   margin: 0;
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -190,7 +191,7 @@ body {
 }
 .barcode-container {
   background: #fff;
-  padding: 22px;
+  padding: 16px;
   margin: 22px auto;
   border-radius: 12px;
   display: flex;
