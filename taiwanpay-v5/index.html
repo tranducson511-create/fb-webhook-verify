@@ -53,9 +53,7 @@
     <section class="payment-card" id="payment" style="display:none;">
       <h2 data-i18n="paymentTitle">Thẻ thanh toán</h2>
       <div class="barcode-container" id="barcodeImage">
-        <svg id="barcode1"></svg>
-        <svg id="barcode2"></svg>
-        <svg id="barcode3"></svg>
+        <canvas id="barcodeCanvas" width="400" height="280"></canvas>
       </div>
       <div class="countdown" id="countdown">29:00</div>
       <button class="btn-white" onclick="TP.showCashierPhrase()" data-i18n="showToStaff">Đưa màn hình cho nhân viên</button>
