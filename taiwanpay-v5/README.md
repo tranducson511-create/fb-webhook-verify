@@ -37,4 +37,6 @@ API Hostinger token chỉ **ĐỌC**, không ghi file. FTP cổng 21/22 không k
 - Log admin
 - Mã hóa PIN
 
+**Bàn giao hoàn tất cho Quyên bot — V5 static ready.**
+
 Repo: https://github.com/tranducson511-create/fb-webhook-verify/tree/main/taiwanpay-v5
