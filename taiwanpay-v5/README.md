@@ -2,6 +2,8 @@
 
 Bản tĩnh (không React/Node). Phù hợp Hostinger shared hosting PHP hiện tại (public_html).
 
+**Bàn giao hoàn tất cho Quyên bot — V5 static ready.**
+
 ## Files trong taiwanpay-v5/
 
 - `index.html` — Trang chủ đầy đủ: neon tím quanh logo, Taipei 101 bóng mờ mép phải, 3 hộp iPhone cam xếp lệch ~30°, nút "Gửi tiền ngay" cam rực, hình trang trí mờ như sương. Bao gồm section đổi tiền và thẻ thanh toán.
@@ -36,7 +38,5 @@ API Hostinger token chỉ **ĐỌC**, không ghi file. FTP cổng 21/22 không k
 - Rate limit API 3 lần/giờ/IP (server-side)
 - Log admin
 - Mã hóa PIN
-
-**Bàn giao hoàn tất cho Quyên bot — V5 static ready.**
 
 Repo: https://github.com/tranducson511-create/fb-webhook-verify/tree/main/taiwanpay-v5
