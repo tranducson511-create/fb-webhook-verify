@@ -8,7 +8,7 @@ Bản tĩnh (không React/Node). Phù hợp Hostinger shared hosting PHP hiện 
 
 - `index.html` — Trang chủ đầy đủ: neon tím quanh logo, Taipei 101 bóng mờ mép phải, 3 hộp iPhone cam xếp lệch ~30°, nút "Gửi tiền ngay" cam rực, hình trang trí mờ như sương. Bao gồm section đổi tiền và thẻ thanh toán.
 - `style.css` — Styles neon, mist, iPhones 30°, countdown (cam <30 phút, đỏ <5 phút), admin 3 cột, responsive.
-- `app.js` — Logic đổi tiền (số lớn lên trước, bạn trả / phí NT$150 / người nhận, khóa báo giá, cả hai chiều Đài-Việt), barcode Code 39 (`151001K5G`, `00MRT261001ARMJK`, `035782000001150`) trong một khối ảnh, đồng hồ đếm ngược đúng phút, đa ngôn ngữ tách khỏi logic (câu thu ngân luôn tiếng Trung), hàng đợi admin mock ưu tiên.
+- `app.js` — Logic đổi tiền (số lớn lên trước, bạn trả / phí NT$150 / người nhận, khóa báo giá, cả hai chiều Đài-Việt), barcode Code 39 (`151001K5G`, `00MRT261001ARMJK`, `035782000001150`) trong một khối, đồng hồ đếm ngược đúng phút, đa ngôn ngữ tách khỏi logic (câu thu ngân luôn tiếng Trung), hàng đợi admin mock ưu tiên.
 - `admin.html` — Admin V5: hàng đợi đơn gấp lên trước (quá hạn → sắp hết hạn → chờ gửi mã → khách báo đã trả), mã đơn đầu dòng, nút đổi theo việc (Tạo TwPay Card / Xác nhận đã nhận tiền / Nhắc khách), trang đơn 3 cột thay popup, ảnh gốc + watermark `go-vn` chỉ admin thấy, hai giờ cạnh nhau (trên phiếu 19:50 / hết hạn 10:50), nút "Trừ 2 phút" ghi rõ, việc còn thiếu hiện ngay trên nút gửi.
 - `README.md` — File này.
 

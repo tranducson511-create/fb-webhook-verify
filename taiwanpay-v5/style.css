@@ -100,6 +100,7 @@ body {
   cursor: pointer;
   box-shadow: 0 8px 24px rgba(255,69,0,.45);
   margin-top: 1rem;
+  transition: transform .15s;
 }
 .cta:hover { transform: translateY(-2px); }
 
@@ -108,6 +109,8 @@ body {
   justify-content: center;
   gap: .5rem;
   padding: .5rem;
+  position: relative;
+  z-index: 2;
 }
 .lang-bar button {
   background: #1a1a28;
@@ -118,7 +121,7 @@ body {
   cursor: pointer;
 }
 
-.section { max-width: 480px; margin: 0 auto; padding: 2rem 1rem 3rem; }
+.section { max-width: 480px; margin: 0 auto; padding: 2rem 1rem 3rem; position: relative; z-index: 1; }
 .section-title { text-align: center; margin-bottom: 1.2rem; }
 .dir-btns { display: flex; gap: .5rem; margin-bottom: 1rem; }
 .dir-btns button {
@@ -152,15 +155,16 @@ body {
 }
 .pay-card h3 { text-align: center; margin-bottom: .8rem; }
 .barcode-box { background: #f7f7f7; border: 1px solid #ddd; border-radius: 8px; padding: .8rem; text-align: center; margin-bottom: .6rem; }
-.barcode { font-family: 'Libre Barcode 39', cursive; font-size: 2.2rem; line-height: 1.15; letter-spacing: 1px; }
+.barcode { font-family: 'Libre Barcode 39', cursive; font-size: 2.2rem; line-height: 1.15; letter-spacing: 1px; display: block; margin: 4px 0; }
 .cashier-phrase { text-align: center; font-size: 1.05rem; font-weight: 600; margin: .6rem 0; color: #222; }
-.countdown { text-align: center; font-size: 2.4rem; font-weight: 800; margin: .6rem 0; color: var(--warn); }
-.countdown.red { color: var(--danger); }
+.countdown { text-align: center; font-size: 2.4rem; font-weight: 800; margin: .6rem 0; color: #ffaa00; }
+.countdown.warn { color: #ffaa00; }
+.countdown.red { color: #ff3344; }
 .white-btn {
   width: 100%; padding: .9rem; background: #fff; border: 2px solid #111; border-radius: 12px;
   font-weight: 700; cursor: pointer; margin-top: .5rem;
 }
-footer { text-align: center; padding: 2rem; opacity: .6; }
+footer { text-align: center; padding: 2rem; opacity: .6; position: relative; z-index: 1; }
 footer a { color: var(--neon); }
 
 /* Admin */
@@ -169,6 +173,7 @@ footer a { color: var(--neon); }
 .order-item {
   display: flex; align-items: center; gap: 1rem; padding: .9rem 1rem;
   background: #141422; border-radius: 12px; margin-bottom: .6rem; border-left: 4px solid #444;
+  flex-wrap: wrap;
 }
 .order-item.overdue { border-left-color: var(--danger); }
 .order-item.expiring { border-left-color: var(--warn); }
@@ -183,7 +188,6 @@ footer a { color: var(--neon); }
 .detail-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
 .detail-col { background: #141422; border-radius: 12px; padding: 1rem; }
 .img-box { position: relative; }
-.img-box img { width: 100%; border-radius: 8px; }
 .watermark { position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,.6); color: #fff; font-size: .7rem; padding: 2px 6px; border-radius: 4px; }
 .missing { color: var(--warn); font-size: .85rem; margin-top: .4rem; }
-@media (max-width: 800px) { .detail-grid { grid-template-columns: 1fr; } }
+@media (max-width: 800px) { .detail-grid { grid-template-columns: 1fr; } .order-item { flex-direction: column; align-items: flex-start; } }

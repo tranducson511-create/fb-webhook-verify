@@ -1,5 +1,5 @@
-// TaiwanPay V5 — Client logic (static)
-// Language separated from logic. Cashier phrase ALWAYS Chinese.
+// TaiwanPay V5 — Client logic (static for Hostinger public_html)
+// Language fully separated. Cashier phrase ALWAYS Chinese.
 const translations = {
   vi: {
     logoSub: 'Đổi tiền · Gửi về nhà · Thanh toán tại Đài Loan',
@@ -144,8 +144,12 @@ const TP = {
       const m = Math.floor(countdownSeconds / 60);
       const s = countdownSeconds % 60;
       el.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-      el.classList.toggle('red', countdownSeconds < 5 * 60);
-      el.style.color = countdownSeconds < 5 * 60 ? 'var(--danger)' : (countdownSeconds < 30 * 60 ? 'var(--warn)' : '#ffaa00');
+      el.classList.remove('warn', 'red');
+      if (countdownSeconds < 5 * 60) {
+        el.classList.add('red');
+      } else if (countdownSeconds < 30 * 60) {
+        el.classList.add('warn');
+      }
       if (countdownSeconds > 0) countdownSeconds--;
     };
     tick();
@@ -165,18 +169,19 @@ const TP = {
           <span>Hết hạn ${o.expireTime}</span>
         </div>
         <div class="actions">
-          ${o.status === 'waiting' ? `<button class="btn-primary" onclick="TP.action('${o.id}','create')">Tạo TwPay Card</button>` : ''}
+          ${o.status === 'waiting' || o.status === 'overdue' ? `<button class="btn-primary" onclick="TP.action('${o.id}','create')">Tạo TwPay Card</button>` : ''}
           ${o.status === 'paid' ? `<button class="btn-success" onclick="TP.action('${o.id}','confirm')">Xác nhận đã nhận tiền</button>` : ''}
           ${o.missing ? `<button class="btn-warn" onclick="TP.action('${o.id}','remind')">Nhắc khách</button>` : ''}
           <button onclick="TP.minus2('${o.id}')">Trừ 2 phút</button>
         </div>
-        ${o.missing ? `<div class="missing">${o.missing}</div>` : ''}
+        ${o.missing ? `<div class="missing">Còn thiếu: ${o.missing}</div>` : ''}
       </div>
     `).join('');
   },
 
   action(id, type) {
-    alert(`Thực hiện: ${type} cho đơn ${id}`);
+    const labels = { create: 'Tạo TwPay Card', confirm: 'Xác nhận đã nhận tiền', remind: 'Nhắc khách' };
+    alert(`${labels[type] || type} cho đơn ${id}`);
   },
 
   minus2(id) {
@@ -186,30 +191,33 @@ const TP = {
   openDetail(id) {
     const detail = document.getElementById('detail');
     if (!detail) return;
+    const o = mockOrders.find(x => x.id === id) || mockOrders[0];
     detail.innerHTML = `
       <div class="detail-grid">
         <div class="detail-col">
-          <h3>${id}</h3>
-          <p>Số tiền: 15,000 NT$</p>
+          <h3>${o.id}</h3>
+          <p>Số tiền: ${o.amount.toLocaleString()} NT$</p>
           <div class="times">
-            <div>Trên phiếu: <strong>19:50</strong></div>
-            <div>Hết hạn: <strong>10:50</strong></div>
+            <div>Trên phiếu: <strong>${o.slipTime}</strong></div>
+            <div>Hết hạn: <strong>${o.expireTime}</strong></div>
           </div>
-          <button class="btn-primary" style="margin-top:1rem">Gửi mã (còn thiếu: ảnh ARC)</button>
+          <button class="btn-primary" style="margin-top:1rem;width:100%" onclick="TP.action('${o.id}','send')">
+            Gửi mã${o.missing ? ' (còn thiếu: ' + o.missing + ')' : ''}
+          </button>
         </div>
         <div class="detail-col">
           <div class="img-box">
             <div style="background:#222;height:180px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#666">Ảnh gốc</div>
             <div class="watermark">go-vn</div>
           </div>
-          <p style="margin-top:.5rem;font-size:.85rem">Watermark chỉ admin thấy</p>
+          <p style="margin-top:.5rem;font-size:.85rem">Watermark go-vn chỉ admin thấy</p>
         </div>
         <div class="detail-col">
           <h4>Hành động</h4>
-          <button class="btn-primary" style="width:100%;margin:.4rem 0">Tạo TwPay Card</button>
-          <button class="btn-success" style="width:100%;margin:.4rem 0">Xác nhận đã nhận tiền</button>
-          <button class="btn-warn" style="width:100%;margin:.4rem 0">Nhắc khách</button>
-          <button style="width:100%;margin:.4rem 0">Trừ 2 phút</button>
+          <button class="btn-primary" style="width:100%;margin:.4rem 0" onclick="TP.action('${o.id}','create')">Tạo TwPay Card</button>
+          <button class="btn-success" style="width:100%;margin:.4rem 0" onclick="TP.action('${o.id}','confirm')">Xác nhận đã nhận tiền</button>
+          <button class="btn-warn" style="width:100%;margin:.4rem 0" onclick="TP.action('${o.id}','remind')">Nhắc khách</button>
+          <button style="width:100%;margin:.4rem 0" onclick="TP.minus2('${o.id}')">Trừ 2 phút</button>
         </div>
       </div>
     `;
@@ -220,5 +228,8 @@ document.addEventListener('DOMContentLoaded', () => {
   TP.setLang(currentLang);
   TP.updateExchange();
   TP.startCountdown();
-  TP.renderAdmin();
+  if (document.getElementById('queue')) {
+    TP.renderAdmin();
+    TP.openDetail(mockOrders[0].id);
+  }
 });
