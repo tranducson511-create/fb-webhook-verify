@@ -44,3 +44,6 @@ FTP cổng 21/22 không kết nối được từ xa.
 - Mã hóa PIN
 
 Repo: https://github.com/tranducson511-create/fb-webhook-verify/tree/main/taiwanpay-v5
+
+---
+Bàn giao hoàn tất — sẵn sàng deploy.
