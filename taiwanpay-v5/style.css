@@ -1,193 +1,39 @@
-/* TaiwanPay V5 — Static styles */
-:root {
-  --neon: #bf00ff;
-  --neon-glow: 0 0 12px #bf00ff, 0 0 24px #bf00ff, 0 0 48px #bf00ff;
-  --orange: #ff6b00;
-  --orange-bright: #ff4500;
-  --bg: #0a0a12;
-  --card: #141422;
-  --text: #f5f5f7;
-  --muted: #a0a0b0;
-  --danger: #ff3344;
-  --warn: #ffaa00;
-}
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-.mist {
-  position: fixed;
-  width: 60vw;
-  height: 60vh;
-  background: radial-gradient(circle, rgba(191,0,255,0.08) 0%, transparent 70%);
-  filter: blur(40px);
-  pointer-events: none;
-  z-index: 0;
-}
-.mist-1 { top: -10%; left: -10%; }
-.mist-2 { bottom: -10%; right: -10%; }
-.taipei-101 {
-  position: fixed;
-  right: -5%;
-  top: 15%;
-  width: 280px;
-  height: 520px;
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 200"><polygon points="50,10 45,40 55,40" fill="%23ffffff22"/><rect x="42" y="40" width="16" height="140" fill="%23ffffff18"/><rect x="38" y="60" width="24" height="8" fill="%23ffffff15"/><rect x="38" y="90" width="24" height="8" fill="%23ffffff15"/><rect x="38" y="120" width="24" height="8" fill="%23ffffff15"/></svg>') no-repeat center;
-  background-size: contain;
-  opacity: 0.18;
-  pointer-events: none;
-  z-index: 0;
-  filter: blur(1px);
-}
+body { font-family: system-ui, sans-serif; background: #0a0a12; color: #fff; }
+nav { display: flex; gap: 1rem; padding: 1rem; background: #111; align-items: center; }
+nav a { color: #ccc; text-decoration: none; }
+nav a:hover { color: #ff6b00; }
+#lang { background: #222; color: #fff; border: 1px solid #444; padding: 0.3rem; }
 
-.hero {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  padding: 3rem 1rem 4rem;
-}
-.logo {
-  font-size: 3.2rem;
-  font-weight: 800;
-  color: #fff;
-  text-shadow: var(--neon-glow);
-  position: relative;
-  display: inline-block;
-}
-.logo::after {
-  content: '';
-  position: absolute;
-  inset: -10px -16px;
-  border: 2px solid var(--neon);
-  border-radius: 14px;
-  box-shadow: var(--neon-glow);
-  animation: pulse 2.5s ease-in-out infinite;
-}
-@keyframes pulse { 0%,100%{opacity:.55} 50%{opacity:1} }
-.logo-sub { margin-top: .8rem; color: var(--muted); font-size: .95rem; }
+.hero { position: relative; height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
+.logo-neon { font-size: 4rem; font-weight: bold; color: #fff; text-shadow: 0 0 10px #a855f7, 0 0 20px #a855f7, 0 0 40px #a855f7; animation: neon 2s infinite alternate; }
+@keyframes neon { from { text-shadow: 0 0 10px #a855f7, 0 0 20px #a855f7; } to { text-shadow: 0 0 20px #a855f7, 0 0 40px #a855f7, 0 0 60px #a855f7; } }
+.taipei-101 { position: absolute; right: 0; top: 0; width: 200px; height: 100%; background: linear-gradient(to left, rgba(100,100,150,0.3), transparent); }
+.iphones { position: absolute; left: 10%; top: 30%; display: flex; gap: 1rem; transform: rotate(-15deg); }
+.iphone { width: 80px; height: 160px; background: linear-gradient(135deg, #ff6b00, #ff4500); border-radius: 15px; transform: rotate(30deg); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+.iphone.orange2 { transform: rotate(30deg) translateY(20px); }
+.iphone.orange3 { transform: rotate(30deg) translateY(40px); }
+.fog { position: absolute; inset: 0; background: radial-gradient(circle, transparent 40%, rgba(255,255,255,0.05) 100%); pointer-events: none; }
+.btn-orange { background: #ff6b00; color: #fff; padding: 1rem 2rem; border-radius: 50px; text-decoration: none; font-size: 1.2rem; font-weight: bold; margin-top: 2rem; box-shadow: 0 0 20px #ff6b00; }
 
-.phones {
-  position: relative;
-  height: 280px;
-  margin: 2rem auto;
-  max-width: 420px;
-}
-.iphone {
-  position: absolute;
-  width: 140px;
-  height: 260px;
-  background: linear-gradient(160deg, #ff7a1a, #ff4500);
-  border-radius: 22px;
-  box-shadow: 0 20px 40px rgba(0,0,0,.5);
-  border: 4px solid #111;
-}
-.iphone-1 { left: 10%; transform: rotate(-28deg); z-index: 1; }
-.iphone-2 { left: 38%; transform: rotate(4deg); z-index: 2; }
-.iphone-3 { right: 10%; transform: rotate(32deg); z-index: 1; }
+.exchange { text-align: center; padding: 2rem; }
+.amount-large { font-size: 5rem; font-weight: bold; margin: 1rem 0; }
+.labels { display: flex; justify-content: space-around; margin: 1rem 0; }
+.direction button { margin: 0.5rem; padding: 0.5rem 1rem; background: #222; color: #fff; border: 1px solid #444; }
+.direction button.active { background: #ff6b00; }
+.quote-lock button { background: #333; color: #fff; padding: 0.5rem 1rem; }
 
-.cta {
-  background: var(--orange-bright);
-  color: #fff;
-  border: none;
-  padding: 1rem 2.4rem;
-  font-size: 1.15rem;
-  font-weight: 700;
-  border-radius: 999px;
-  cursor: pointer;
-  box-shadow: 0 8px 24px rgba(255,69,0,.45);
-  margin-top: 1rem;
-  transition: transform .15s;
-}
-.cta:hover { transform: translateY(-2px); }
+.payment-card { text-align: center; padding: 2rem; }
+.barcode-container { display: flex; flex-direction: column; gap: 1rem; align-items: center; margin: 2rem 0; }
+.btn-white { background: #fff; color: #000; padding: 1rem 2rem; border: none; border-radius: 8px; font-size: 1.1rem; }
+.cashier-text { font-size: 1.5rem; margin: 1rem 0; font-family: sans-serif; }
+.timer { font-size: 3rem; font-weight: bold; margin: 1rem 0; color: #ff6b00; }
+.timer.red { color: #ff0000; }
 
-.lang-bar {
-  display: flex;
-  justify-content: center;
-  gap: .5rem;
-  padding: .5rem;
-  position: relative;
-  z-index: 2;
-}
-.lang-bar button {
-  background: #1a1a28;
-  color: #fff;
-  border: 1px solid #333;
-  padding: .4rem .9rem;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.section { max-width: 480px; margin: 0 auto; padding: 2rem 1rem 3rem; position: relative; z-index: 1; }
-.section-title { text-align: center; margin-bottom: 1.2rem; }
-.dir-btns { display: flex; gap: .5rem; margin-bottom: 1rem; }
-.dir-btns button {
-  flex: 1; padding: .7rem; border-radius: 10px; border: 1px solid #333;
-  background: #1a1a28; color: #fff; cursor: pointer;
-}
-.dir-btns button.active { background: var(--orange); border-color: var(--orange); }
-
-.card {
-  background: var(--card);
-  border-radius: 16px;
-  padding: 1.5rem;
-  border: 1px solid rgba(255,255,255,.06);
-}
-.amount-display { font-size: 2.6rem; font-weight: 800; text-align: center; margin: .5rem 0 1rem; }
-.card input {
-  width: 100%; padding: .8rem; margin: .4rem 0 1rem;
-  background: #0e0e18; border: 1px solid #333; border-radius: 10px; color: #fff; font-size: 1.1rem;
-}
-.row { display: flex; justify-content: space-between; padding: .45rem 0; color: var(--muted); }
-.row.big { color: #fff; font-size: 1.15rem; border-top: 1px solid #222; margin-top: .5rem; padding-top: .8rem; }
-.lock-btn {
-  width: 100%; margin-top: 1rem; padding: .85rem; border-radius: 12px;
-  background: #222; color: #fff; border: 1px solid #444; cursor: pointer;
-}
-.lock-btn.locked { background: #00aa55; border-color: #00aa55; }
-
-.pay-card {
-  background: #fff; color: #111; border-radius: 16px; padding: 1.4rem;
-  max-width: 360px; margin: 0 auto; box-shadow: 0 24px 50px rgba(0,0,0,.45);
-}
-.pay-card h3 { text-align: center; margin-bottom: .8rem; }
-.barcode-box { background: #f7f7f7; border: 1px solid #ddd; border-radius: 8px; padding: .8rem; text-align: center; margin-bottom: .6rem; }
-.barcode { font-family: 'Libre Barcode 39', cursive; font-size: 2.2rem; line-height: 1.15; letter-spacing: 1px; display: block; margin: 4px 0; }
-.cashier-phrase { text-align: center; font-size: 1.05rem; font-weight: 600; margin: .6rem 0; color: #222; }
-.countdown { text-align: center; font-size: 2.4rem; font-weight: 800; margin: .6rem 0; color: #ffaa00; }
-.countdown.warn { color: #ffaa00; }
-.countdown.red { color: #ff3344; }
-.white-btn {
-  width: 100%; padding: .9rem; background: #fff; border: 2px solid #111; border-radius: 12px;
-  font-weight: 700; cursor: pointer; margin-top: .5rem;
-}
-footer { text-align: center; padding: 2rem; opacity: .6; position: relative; z-index: 1; }
-footer a { color: var(--neon); }
-
-/* Admin */
-.admin-wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
-.queue { margin-bottom: 2rem; }
-.order-item {
-  display: flex; align-items: center; gap: 1rem; padding: .9rem 1rem;
-  background: #141422; border-radius: 12px; margin-bottom: .6rem; border-left: 4px solid #444;
-  flex-wrap: wrap;
-}
-.order-item.overdue { border-left-color: var(--danger); }
-.order-item.expiring { border-left-color: var(--warn); }
-.order-item.waiting { border-left-color: #4488ff; }
-.order-item.paid { border-left-color: #00cc66; }
-.order-id { font-weight: 700; min-width: 140px; }
-.times { display: flex; gap: 1.2rem; font-size: .9rem; color: var(--muted); }
-.actions button { margin-right: .4rem; padding: .45rem .8rem; border-radius: 8px; border: none; cursor: pointer; font-size: .85rem; }
-.btn-primary { background: var(--orange); color: #fff; }
-.btn-success { background: #00aa55; color: #fff; }
-.btn-warn { background: #ffaa00; color: #111; }
-.detail-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
-.detail-col { background: #141422; border-radius: 12px; padding: 1rem; }
-.img-box { position: relative; }
-.watermark { position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,.6); color: #fff; font-size: .7rem; padding: 2px 6px; border-radius: 4px; }
-.missing { color: var(--warn); font-size: .85rem; margin-top: .4rem; }
-@media (max-width: 800px) { .detail-grid { grid-template-columns: 1fr; } .order-item { flex-direction: column; align-items: flex-start; } }
+.admin { padding: 1rem; }
+.queue { margin: 1rem 0; }
+.queue-item { padding: 0.5rem; border-bottom: 1px solid #333; cursor: pointer; }
+.queue-item:hover { background: #222; }
+.order-detail { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+.col { background: #111; padding: 1rem; min-height: 200px; }
+button { margin: 0.5rem; padding: 0.5rem 1rem; background: #ff6b00; color: #fff; border: none; border-radius: 4px; }

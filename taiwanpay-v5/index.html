@@ -1,90 +1,42 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TaiwanPay — Đổi tiền · Gửi về nhà</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Libre+Barcode+39&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaiwanPay - Gửi tiền Đài Loan - Việt Nam</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="mist mist-1"></div>
-  <div class="mist mist-2"></div>
-  <div class="taipei-101"></div>
-
   <header class="hero">
-    <div class="logo-wrap">
-      <div class="logo">TaiwanPay</div>
-      <div class="logo-sub" data-i18n="logoSub">Đổi tiền · Gửi về nhà · Thanh toán tại Đài Loan</div>
+    <div class="logo-neon">TaiwanPay</div>
+    <div class="taipei-101"></div>
+    <div class="iphones">
+      <div class="iphone orange1"></div>
+      <div class="iphone orange2"></div>
+      <div class="iphone orange3"></div>
     </div>
-
-    <div class="phones">
-      <div class="iphone iphone-1"></div>
-      <div class="iphone iphone-2"></div>
-      <div class="iphone iphone-3"></div>
-    </div>
-
-    <button class="cta" data-i18n="cta" onclick="document.getElementById('exchange').scrollIntoView({behavior:'smooth'})">Gửi tiền ngay</button>
+    <div class="fog"></div>
+    <a href="exchange.html" class="btn-orange">Gửi tiền ngay</a>
   </header>
-
-  <nav class="lang-bar">
-    <button onclick="TP.setLang('vi')">VI</button>
-    <button onclick="TP.setLang('en')">EN</button>
-    <button onclick="TP.setLang('zh-TW')">繁中</button>
-    <button onclick="TP.setLang('id')">ID</button>
-    <button onclick="TP.setLang('th')">ไทย</button>
+  <nav>
+    <a href="index.html" data-i18n="home">Trang chủ</a>
+    <a href="exchange.html" data-i18n="exchange">Đổi tiền</a>
+    <a href="payment.html" data-i18n="payment">Thẻ thanh toán</a>
+    <a href="admin.html" data-i18n="admin">Admin</a>
+    <select id="lang">
+      <option value="vi">Tiếng Việt</option>
+      <option value="en">English</option>
+      <option value="zh">繁體中文</option>
+      <option value="id">Bahasa Indonesia</option>
+      <option value="th">ภาษาไทย</option>
+    </select>
   </nav>
-
-  <!-- EXCHANGE -->
-  <section id="exchange" class="section">
-    <h2 class="section-title" data-i18n="exchange">Đổi tiền</h2>
-    <div class="dir-btns">
-      <button id="btn-tw-vn" class="active" onclick="TP.setDirection('tw-vn')" data-i18n="dirTwdVnd">Đài → Việt</button>
-      <button id="btn-vn-tw" onclick="TP.setDirection('vn-tw')" data-i18n="dirVndTwd">Việt → Đài</button>
-    </div>
-
-    <div class="card">
-      <div class="amount-display" id="bigAmount">NT$ 10,000</div>
-      <label data-i18n="amountLabel">Số tiền</label>
-      <input type="number" id="amountInput" value="10000" min="0" oninput="TP.updateExchange()" />
-
-      <div class="row">
-        <span data-i18n="youPay">Bạn trả</span>
-        <strong id="youPay">NT$ 10,150</strong>
-      </div>
-      <div class="row">
-        <span data-i18n="fee">Phí</span>
-        <strong>NT$ 150</strong>
-      </div>
-      <div class="row big">
-        <span data-i18n="recipient">Người nhận</span>
-        <strong id="receiver">₫ 8,200,000</strong>
-      </div>
-
-      <button class="lock-btn" id="lockBtn" onclick="TP.lockRate()" data-i18n="lockRate">Khóa báo giá</button>
-    </div>
-  </section>
-
-  <!-- PAYMENT CARD -->
-  <section id="card" class="section">
-    <h2 class="section-title" data-i18n="paymentCard">Thẻ thanh toán</h2>
-    <div class="pay-card">
-      <h3 data-i18n="showScreen">Đưa màn hình cho nhân viên</h3>
-      <div class="barcode-box" id="barcodeBox">
-        <div class="barcode">151001K5G</div>
-        <div class="barcode">00MRT261001ARMJK</div>
-        <div class="barcode">035782000001150</div>
-      </div>
-      <p class="cashier-phrase">我要繳費，條碼在這裡。</p>
-      <div class="countdown" id="countdown">28:00</div>
-      <button class="white-btn" data-i18n="showScreen">Đưa màn hình cho nhân viên</button>
-    </div>
-  </section>
-
-  <footer>
-    <a href="admin.html">Admin</a>
-  </footer>
-
+  <main>
+    <section>
+      <h1 data-i18n="welcome">Chào mừng đến TaiwanPay</h1>
+      <p data-i18n="desc">Gửi tiền nhanh chóng giữa Đài Loan và Việt Nam.</p>
+    </section>
+  </main>
   <script src="app.js"></script>
 </body>
 </html>

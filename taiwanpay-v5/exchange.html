@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đổi tiền - TaiwanPay</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <a href="index.html" data-i18n="home">Trang chủ</a>
+    <a href="exchange.html" data-i18n="exchange">Đổi tiền</a>
+    <a href="payment.html" data-i18n="payment">Thẻ thanh toán</a>
+    <a href="admin.html" data-i18n="admin">Admin</a>
+    <select id="lang">
+      <option value="vi">Tiếng Việt</option>
+      <option value="en">English</option>
+      <option value="zh">繁體中文</option>
+      <option value="id">Bahasa Indonesia</option>
+      <option value="th">ภาษาไทย</option>
+    </select>
+  </nav>
+  <main class="exchange">
+    <h1 data-i18n="exchangeTitle">Đổi tiền</h1>
+    <div class="direction">
+      <button id="dir-tw-vn" class="active" data-i18n="twToVn">Đài → Việt</button>
+      <button id="dir-vn-tw" data-i18n="vnToTw">Việt → Đài</button>
+    </div>
+    <div class="amount-large" id="you-pay">10,000</div>
+    <div class="labels">
+      <span data-i18n="youPay">Bạn trả</span>
+      <span data-i18n="fee">Phí NT$150</span>
+      <span data-i18n="recipient">Người nhận</span>
+    </div>
+    <div class="quote-lock">
+      <button id="lock-quote" data-i18n="lockQuote">Khóa báo giá</button>
+      <span id="quote-status" data-i18n="quoteOpen">Báo giá mở</span>
+    </div>
+    <div id="rate-info">Tỷ giá: 1 NT$ = 780 VND</div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

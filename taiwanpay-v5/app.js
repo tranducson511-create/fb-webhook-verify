@@ -1,235 +1,67 @@
-// TaiwanPay V5 — Client logic (static for Hostinger public_html)
-// Language fully separated. Cashier phrase ALWAYS Chinese.
-const translations = {
-  vi: {
-    logoSub: 'Đổi tiền · Gửi về nhà · Thanh toán tại Đài Loan',
-    cta: 'Gửi tiền ngay',
-    exchange: 'Đổi tiền',
-    youPay: 'Bạn trả',
-    fee: 'Phí NT$150',
-    recipient: 'Người nhận',
-    lockRate: 'Khóa báo giá',
-    dirTwdVnd: 'Đài → Việt',
-    dirVndTwd: 'Việt → Đài',
-    amountLabel: 'Số tiền',
-    paymentCard: 'Thẻ thanh toán',
-    showScreen: 'Đưa màn hình cho nhân viên'
-  },
-  en: {
-    logoSub: 'Exchange · Send home · Pay in Taiwan',
-    cta: 'Send money now',
-    exchange: 'Exchange',
-    youPay: 'You pay',
-    fee: 'Fee NT$150',
-    recipient: 'Recipient gets',
-    lockRate: 'Lock rate',
-    dirTwdVnd: 'TW → VN',
-    dirVndTwd: 'VN → TW',
-    amountLabel: 'Amount',
-    paymentCard: 'Payment card',
-    showScreen: 'Show screen to staff'
-  },
-  'zh-TW': {
-    logoSub: '換匯 · 匯回家 · 在台灣付款',
-    cta: '立即匯款',
-    exchange: '換匯',
-    youPay: '您支付',
-    fee: '手續費 NT$150',
-    recipient: '收款人收到',
-    lockRate: '鎖定匯率',
-    dirTwdVnd: '台 → 越',
-    dirVndTwd: '越 → 台',
-    amountLabel: '金額',
-    paymentCard: '付款卡',
-    showScreen: '將螢幕出示給店員'
-  },
-  id: {
-    logoSub: 'Tukar · Kirim pulang · Bayar di Taiwan',
-    cta: 'Kirim uang sekarang',
-    exchange: 'Tukar uang',
-    youPay: 'Anda bayar',
-    fee: 'Biaya NT$150',
-    recipient: 'Penerima dapat',
-    lockRate: 'Kunci kurs',
-    dirTwdVnd: 'TW → VN',
-    dirVndTwd: 'VN → TW',
-    amountLabel: 'Jumlah',
-    paymentCard: 'Kartu pembayaran',
-    showScreen: 'Tunjukkan layar ke petugas'
-  },
-  th: {
-    logoSub: 'แลกเงิน · ส่งกลับบ้าน · ชำระที่ไต้หวัน',
-    cta: 'ส่งเงินทันที',
-    exchange: 'แลกเงิน',
-    youPay: 'คุณจ่าย',
-    fee: 'ค่าธรรมเนียม NT$150',
-    recipient: 'ผู้รับได้',
-    lockRate: 'ล็อกเรท',
-    dirTwdVnd: 'ไต้หวัน → เวียดนาม',
-    dirVndTwd: 'เวียดนาม → ไต้หวัน',
-    amountLabel: 'จำนวน',
-    paymentCard: 'บัตรชำระเงิน',
-    showScreen: 'แสดงหน้าจอให้พนักงาน'
-  }
+const i18n = {
+  vi: { home: "Trang chủ", exchange: "Đổi tiền", payment: "Thẻ thanh toán", admin: "Admin", welcome: "Chào mừng đến TaiwanPay", desc: "Gửi tiền nhanh chóng giữa Đài Loan và Việt Nam.", exchangeTitle: "Đổi tiền", twToVn: "Đài → Việt", vnToTw: "Việt → Đài", youPay: "Bạn trả", fee: "Phí NT$150", recipient: "Người nhận", lockQuote: "Khóa báo giá", quoteOpen: "Báo giá mở", paymentTitle: "Thẻ thanh toán", showStaff: "Đưa màn hình cho nhân viên", adminTitle: "Admin V5 - Hàng đợi đơn gấp", minus2: "Trừ 2 phút" },
+  en: { home: "Home", exchange: "Exchange", payment: "Payment Card", admin: "Admin", welcome: "Welcome to TaiwanPay", desc: "Fast money transfer between Taiwan and Vietnam.", exchangeTitle: "Exchange", twToVn: "TW → VN", vnToTw: "VN → TW", youPay: "You pay", fee: "Fee NT$150", recipient: "Recipient", lockQuote: "Lock quote", quoteOpen: "Quote open", paymentTitle: "Payment Card", showStaff: "Show screen to staff", adminTitle: "Admin V5 - Urgent Queue", minus2: "Minus 2 min" },
+  zh: { home: "首頁", exchange: "換匯", payment: "繳費卡", admin: "管理", welcome: "歡迎來到 TaiwanPay", desc: "台灣與越南之間的快速匯款。", exchangeTitle: "換匯", twToVn: "台 → 越", vnToTw: "越 → 台", youPay: "您支付", fee: "手續費 NT$150", recipient: "收款人", lockQuote: "鎖定報價", quoteOpen: "報價開啟", paymentTitle: "繳費卡", showStaff: "把螢幕給店員看", adminTitle: "管理 V5 - 緊急隊列", minus2: "減 2 分鐘" },
+  id: { home: "Beranda", exchange: "Tukar", payment: "Kartu Pembayaran", admin: "Admin", welcome: "Selamat datang di TaiwanPay", desc: "Transfer uang cepat antara Taiwan dan Vietnam.", exchangeTitle: "Tukar uang", twToVn: "TW → VN", vnToTw: "VN → TW", youPay: "Anda bayar", fee: "Biaya NT$150", recipient: "Penerima", lockQuote: "Kunci penawaran", quoteOpen: "Penawaran terbuka", paymentTitle: "Kartu Pembayaran", showStaff: "Tunjukkan layar ke staf", adminTitle: "Admin V5 - Antrian Mendesak", minus2: "Kurangi 2 menit" },
+  th: { home: "หน้าแรก", exchange: "แลกเงิน", payment: "บัตรชำระเงิน", admin: "ผู้ดูแล", welcome: "ยินดีต้อนรับสู่ TaiwanPay", desc: "โอนเงินรวดเร็วระหว่างไต้หวันและเวียดนาม", exchangeTitle: "แลกเงิน", twToVn: "ไต้ → เวียด", vnToTw: "เวียด → ไต้", youPay: "คุณจ่าย", fee: "ค่าธรรมเนียม NT$150", recipient: "ผู้รับ", lockQuote: "ล็อคราคา", quoteOpen: "ราคาเปิด", paymentTitle: "บัตรชำระเงิน", showStaff: "แสดงหน้าจอให้พนักงาน", adminTitle: "ผู้ดูแล V5 - คิวเร่งด่วน", minus2: "ลบ 2 นาที" }
 };
 
-const RATE = 820;
-const FEE = 150;
-let currentLang = localStorage.getItem('tp_lang') || 'vi';
-let direction = 'tw-vn';
-let locked = false;
-let countdownSeconds = 28 * 60;
-let countdownTimer = null;
-
-const mockOrders = [
-  { id: 'TP-261014-001', status: 'overdue', slipTime: '19:50', expireTime: '10:50', amount: 15000, missing: 'Thiếu ảnh ARC', priority: 1 },
-  { id: 'TP-261014-002', status: 'expiring', slipTime: '20:10', expireTime: '11:05', amount: 8000, missing: '', priority: 2 },
-  { id: 'TP-261014-003', status: 'waiting', slipTime: '20:30', expireTime: '11:30', amount: 12000, missing: 'Chưa gửi mã', priority: 3 },
-  { id: 'TP-261014-004', status: 'paid', slipTime: '19:00', expireTime: '10:00', amount: 5000, missing: '', priority: 4 },
-  { id: 'TP-261014-005', status: 'waiting', slipTime: '21:00', expireTime: '12:00', amount: 20000, missing: 'Thiếu biên lai', priority: 3 }
-];
-
-const TP = {
-  setLang(lang) {
-    currentLang = lang;
-    localStorage.setItem('tp_lang', lang);
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      if (translations[currentLang]?.[key]) el.textContent = translations[currentLang][key];
-    });
-    document.documentElement.lang = lang === 'zh-TW' ? 'zh-Hant' : lang;
-  },
-
-  setDirection(dir) {
-    direction = dir;
-    document.getElementById('btn-tw-vn')?.classList.toggle('active', dir === 'tw-vn');
-    document.getElementById('btn-vn-tw')?.classList.toggle('active', dir === 'vn-tw');
-    this.updateExchange();
-  },
-
-  updateExchange() {
-    const input = document.getElementById('amountInput');
-    if (!input) return;
-    let amount = parseInt(input.value, 10) || 0;
-    const big = document.getElementById('bigAmount');
-    const youPay = document.getElementById('youPay');
-    const receiver = document.getElementById('receiver');
-
-    if (direction === 'tw-vn') {
-      big.textContent = `NT$ ${amount.toLocaleString()}`;
-      youPay.textContent = `NT$ ${(amount + FEE).toLocaleString()}`;
-      receiver.textContent = `₫ ${(amount * RATE).toLocaleString()}`;
-    } else {
-      big.textContent = `₫ ${amount.toLocaleString()}`;
-      youPay.textContent = `₫ ${amount.toLocaleString()}`;
-      const twd = Math.max(0, Math.floor(amount / RATE) - FEE);
-      receiver.textContent = `NT$ ${twd.toLocaleString()}`;
-    }
-  },
-
-  lockRate() {
-    locked = true;
-    const btn = document.getElementById('lockBtn');
-    if (btn) {
-      btn.classList.add('locked');
-      btn.textContent = translations[currentLang]?.lockRate || 'Đã khóa';
-    }
-  },
-
-  startCountdown() {
-    if (countdownTimer) clearInterval(countdownTimer);
-    const el = document.getElementById('countdown');
-    if (!el) return;
-    const tick = () => {
-      const m = Math.floor(countdownSeconds / 60);
-      const s = countdownSeconds % 60;
-      el.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-      el.classList.remove('warn', 'red');
-      if (countdownSeconds < 5 * 60) {
-        el.classList.add('red');
-      } else if (countdownSeconds < 30 * 60) {
-        el.classList.add('warn');
-      }
-      if (countdownSeconds > 0) countdownSeconds--;
-    };
-    tick();
-    countdownTimer = setInterval(tick, 1000);
-  },
-
-  renderAdmin() {
-    const queue = document.getElementById('queue');
-    if (!queue) return;
-    const sorted = [...mockOrders].sort((a, b) => a.priority - b.priority);
-    queue.innerHTML = sorted.map(o => `
-      <div class="order-item ${o.status}">
-        <span class="order-id">${o.id}</span>
-        <span>${o.amount.toLocaleString()} NT$</span>
-        <div class="times">
-          <span>Phiếu ${o.slipTime}</span>
-          <span>Hết hạn ${o.expireTime}</span>
-        </div>
-        <div class="actions">
-          ${o.status === 'waiting' || o.status === 'overdue' ? `<button class="btn-primary" onclick="TP.action('${o.id}','create')">Tạo TwPay Card</button>` : ''}
-          ${o.status === 'paid' ? `<button class="btn-success" onclick="TP.action('${o.id}','confirm')">Xác nhận đã nhận tiền</button>` : ''}
-          ${o.missing ? `<button class="btn-warn" onclick="TP.action('${o.id}','remind')">Nhắc khách</button>` : ''}
-          <button onclick="TP.minus2('${o.id}')">Trừ 2 phút</button>
-        </div>
-        ${o.missing ? `<div class="missing">Còn thiếu: ${o.missing}</div>` : ''}
-      </div>
-    `).join('');
-  },
-
-  action(id, type) {
-    const labels = { create: 'Tạo TwPay Card', confirm: 'Xác nhận đã nhận tiền', remind: 'Nhắc khách' };
-    alert(`${labels[type] || type} cho đơn ${id}`);
-  },
-
-  minus2(id) {
-    alert(`Đã trừ 2 phút cho đơn ${id} (ghi rõ trên phiếu)`);
-  },
-
-  openDetail(id) {
-    const detail = document.getElementById('detail');
-    if (!detail) return;
-    const o = mockOrders.find(x => x.id === id) || mockOrders[0];
-    detail.innerHTML = `
-      <div class="detail-grid">
-        <div class="detail-col">
-          <h3>${o.id}</h3>
-          <p>Số tiền: ${o.amount.toLocaleString()} NT$</p>
-          <div class="times">
-            <div>Trên phiếu: <strong>${o.slipTime}</strong></div>
-            <div>Hết hạn: <strong>${o.expireTime}</strong></div>
-          </div>
-          <button class="btn-primary" style="margin-top:1rem;width:100%" onclick="TP.action('${o.id}','send')">
-            Gửi mã${o.missing ? ' (còn thiếu: ' + o.missing + ')' : ''}
-          </button>
-        </div>
-        <div class="detail-col">
-          <div class="img-box">
-            <div style="background:#222;height:180px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#666">Ảnh gốc</div>
-            <div class="watermark">go-vn</div>
-          </div>
-          <p style="margin-top:.5rem;font-size:.85rem">Watermark go-vn chỉ admin thấy</p>
-        </div>
-        <div class="detail-col">
-          <h4>Hành động</h4>
-          <button class="btn-primary" style="width:100%;margin:.4rem 0" onclick="TP.action('${o.id}','create')">Tạo TwPay Card</button>
-          <button class="btn-success" style="width:100%;margin:.4rem 0" onclick="TP.action('${o.id}','confirm')">Xác nhận đã nhận tiền</button>
-          <button class="btn-warn" style="width:100%;margin:.4rem 0" onclick="TP.action('${o.id}','remind')">Nhắc khách</button>
-          <button style="width:100%;margin:.4rem 0" onclick="TP.minus2('${o.id}')">Trừ 2 phút</button>
-        </div>
-      </div>
-    `;
-  }
-};
+function setLang(lang) {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (i18n[lang] && i18n[lang][key]) el.textContent = i18n[lang][key];
+  });
+  localStorage.setItem('lang', lang);
+}
 
 document.addEventListener('DOMContentLoaded', () => {
-  TP.setLang(currentLang);
-  TP.updateExchange();
-  TP.startCountdown();
-  if (document.getElementById('queue')) {
-    TP.renderAdmin();
-    TP.openDetail(mockOrders[0].id);
+  const langSelect = document.getElementById('lang');
+  if (langSelect) {
+    const saved = localStorage.getItem('lang') || 'vi';
+    langSelect.value = saved;
+    setLang(saved);
+    langSelect.addEventListener('change', () => setLang(langSelect.value));
+  }
+
+  const timerEl = document.getElementById('timer');
+  if (timerEl) {
+    let seconds = 29 * 60 + 59;
+    setInterval(() => {
+      seconds--;
+      if (seconds < 0) seconds = 0;
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      timerEl.textContent = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+      timerEl.classList.toggle('red', seconds < 5 * 60);
+      timerEl.style.color = seconds < 5 * 60 ? '#ff0000' : (seconds < 30 * 60 ? '#ff6b00' : '#fff');
+    }, 1000);
+  }
+
+  const youPay = document.getElementById('you-pay');
+  if (youPay) {
+    let amount = 10000;
+    youPay.textContent = amount.toLocaleString();
+    document.getElementById('lock-quote')?.addEventListener('click', () => {
+      document.getElementById('quote-status').textContent = 'Đã khóa';
+    });
+  }
+
+  const queue = document.getElementById('queue');
+  if (queue) {
+    const orders = [
+      { id: 'TP001', status: 'Quá hạn', action: 'Tạo TwPay Card' },
+      { id: 'TP002', status: 'Sắp hết hạn', action: 'Xác nhận đã nhận tiền' },
+      { id: 'TP003', status: 'Chờ gửi mã', action: 'Nhắc khách' }
+    ];
+    orders.forEach(o => {
+      const div = document.createElement('div');
+      div.className = 'queue-item';
+      div.innerHTML = `<strong>${o.id}</strong> - ${o.status} <button>${o.action}</button>`;
+      div.onclick = () => {
+        document.getElementById('order-detail').style.display = 'grid';
+        document.getElementById('action-btn').textContent = o.action;
+      };
+      queue.appendChild(div);
+    });
   }
 });

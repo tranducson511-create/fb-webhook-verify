@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thẻ thanh toán - TaiwanPay</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+</head>
+<body>
+  <nav>
+    <a href="index.html" data-i18n="home">Trang chủ</a>
+    <a href="exchange.html" data-i18n="exchange">Đổi tiền</a>
+    <a href="payment.html" data-i18n="payment">Thẻ thanh toán</a>
+    <a href="admin.html" data-i18n="admin">Admin</a>
+    <select id="lang">
+      <option value="vi">Tiếng Việt</option>
+      <option value="en">English</option>
+      <option value="zh">繁體中文</option>
+      <option value="id">Bahasa Indonesia</option>
+      <option value="th">ภาษาไทย</option>
+    </select>
+  </nav>
+  <main class="payment-card">
+    <h1 data-i18n="paymentTitle">Thẻ thanh toán</h1>
+    <div class="barcode-container">
+      <svg id="barcode1"></svg>
+      <svg id="barcode2"></svg>
+      <svg id="barcode3"></svg>
+    </div>
+    <button class="btn-white" data-i18n="showStaff">Đưa màn hình cho nhân viên</button>
+    <p class="cashier-text">我要繳費，條碼在這裡。</p>
+    <div class="timer" id="timer">29:59</div>
+  </main>
+  <script src="app.js"></script>
+  <script>
+    JsBarcode("#barcode1", "151001K5G", {format: "CODE39"});
+    JsBarcode("#barcode2", "00MRT261001ARMJK", {format: "CODE39"});
+    JsBarcode("#barcode3", "035782000001150", {format: "CODE39"});
+  </script>
+</body>
+</html>

@@ -1,23 +1,40 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TaiwanPay Admin V5</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin V5 - TaiwanPay</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="admin-wrap">
-    <h1>Admin V5 — Hàng đợi ưu tiên</h1>
-    <p style="color:#a0a0b0;margin-bottom:1rem">Quá hạn → Sắp hết hạn → Chờ gửi mã → Khách báo đã trả</p>
-
-    <div id="queue" class="queue"></div>
-
-    <h2 style="margin:1.5rem 0 .8rem">Chi tiết đơn (3 cột)</h2>
-    <div id="detail"></div>
-
-    <p style="margin-top:2rem"><a href="index.html">← Về trang chủ</a></p>
-  </div>
+  <nav>
+    <a href="index.html" data-i18n="home">Trang chủ</a>
+    <a href="exchange.html" data-i18n="exchange">Đổi tiền</a>
+    <a href="payment.html" data-i18n="payment">Thẻ thanh toán</a>
+    <a href="admin.html" data-i18n="admin">Admin</a>
+    <select id="lang">
+      <option value="vi">Tiếng Việt</option>
+      <option value="en">English</option>
+      <option value="zh">繁體中文</option>
+      <option value="id">Bahasa Indonesia</option>
+      <option value="th">ภาษาไทย</option>
+    </select>
+  </nav>
+  <main class="admin">
+    <h1 data-i18n="adminTitle">Admin V5 - Hàng đợi đơn gấp</h1>
+    <div class="queue" id="queue"></div>
+    <div class="order-detail" id="order-detail" style="display:none;">
+      <div class="col">Ảnh gốc</div>
+      <div class="col">Watermark go-vn (admin only)</div>
+      <div class="col">
+        <div>Trên phiếu: 19:50</div>
+        <div>Hết hạn: 10:50</div>
+        <button data-i18n="minus2">Trừ 2 phút</button>
+        <button id="action-btn">Tạo TwPay Card</button>
+        <div id="missing">Việc còn thiếu: Xác nhận đã nhận tiền</div>
+      </div>
+    </div>
+  </main>
   <script src="app.js"></script>
 </body>
 </html>
