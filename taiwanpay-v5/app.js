@@ -6,6 +6,7 @@
     vi: {
       home: "Trang chủ", exchange: "Đổi tiền", payment: "Thẻ thanh toán", admin: "Admin",
       welcome: "Chào mừng đến TaiwanPay", desc: "Gửi tiền nhanh chóng giữa Đài Loan và Việt Nam.",
+      cta: "Gửi tiền ngay",
       exchangeTitle: "Đổi tiền", twToVn: "Đài → Việt", vnToTw: "Việt → Đài",
       youPay: "Bạn trả", fee: "Phí NT$150", recipient: "Người nhận",
       lockQuote: "Khóa báo giá", quoteOpen: "Báo giá mở", quoteLocked: "Đã khóa báo giá",
@@ -18,6 +19,7 @@
     en: {
       home: "Home", exchange: "Exchange", payment: "Payment Card", admin: "Admin",
       welcome: "Welcome to TaiwanPay", desc: "Fast money transfer between Taiwan and Vietnam.",
+      cta: "Send money now",
       exchangeTitle: "Exchange", twToVn: "TW → VN", vnToTw: "VN → TW",
       youPay: "You pay", fee: "Fee NT$150", recipient: "Recipient gets",
       lockQuote: "Lock quote", quoteOpen: "Quote open", quoteLocked: "Rate locked",
@@ -30,6 +32,7 @@
     zh: {
       home: "首頁", exchange: "換匯", payment: "繳費卡", admin: "管理",
       welcome: "歡迎來到 TaiwanPay", desc: "台灣與越南之間的快速匯款。",
+      cta: "立即匯款",
       exchangeTitle: "換匯", twToVn: "台 → 越", vnToTw: "越 → 台",
       youPay: "您支付", fee: "手續費 NT$150", recipient: "收款人收到",
       lockQuote: "鎖定報價", quoteOpen: "報價開啟", quoteLocked: "已鎖定報價",
@@ -42,6 +45,7 @@
     id: {
       home: "Beranda", exchange: "Tukar", payment: "Kartu Pembayaran", admin: "Admin",
       welcome: "Selamat datang di TaiwanPay", desc: "Transfer uang cepat antara Taiwan dan Vietnam.",
+      cta: "Kirim uang sekarang",
       exchangeTitle: "Tukar uang", twToVn: "TW → VN", vnToTw: "VN → TW",
       youPay: "Anda bayar", fee: "Biaya NT$150", recipient: "Penerima",
       lockQuote: "Kunci penawaran", quoteOpen: "Penawaran terbuka", quoteLocked: "Penawaran terkunci",
@@ -54,6 +58,7 @@
     th: {
       home: "หน้าแรก", exchange: "แลกเงิน", payment: "บัตรชำระเงิน", admin: "ผู้ดูแล",
       welcome: "ยินดีต้อนรับสู่ TaiwanPay", desc: "โอนเงินรวดเร็วระหว่างไต้หวันและเวียดนาม",
+      cta: "ส่งเงินตอนนี้",
       exchangeTitle: "แลกเงิน", twToVn: "ไต้ → เวียด", vnToTw: "เวียด → ไต้",
       youPay: "คุณจ่าย", fee: "ค่าธรรมเนียม NT$150", recipient: "ผู้รับ",
       lockQuote: "ล็อคราคา", quoteOpen: "ราคาเปิด", quoteLocked: "ล็อคราคาแล้ว",
