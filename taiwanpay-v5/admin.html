@@ -22,16 +22,27 @@
   </nav>
   <main class="admin">
     <h1 data-i18n="adminTitle">Admin V5 - Hàng đợi đơn gấp</h1>
+    <p style="color:#aaa; margin:0.5rem 0 1rem;">Ưu tiên: Quá hạn → Sắp hết hạn → Chờ gửi mã → Khách báo đã trả. Mã đơn đầu dòng.</p>
     <div class="queue" id="queue"></div>
     <div class="order-detail" id="order-detail" style="display:none;">
-      <div class="col">Ảnh gốc</div>
-      <div class="col">Watermark go-vn (admin only)</div>
       <div class="col">
-        <div>Trên phiếu: 19:50</div>
-        <div>Hết hạn: 10:50</div>
-        <button data-i18n="minus2">Trừ 2 phút</button>
+        <h3>Ảnh gốc (khách upload)</h3>
+        <div style="height:140px; background:#222; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#666;">[Original slip image]</div>
+      </div>
+      <div class="col watermark">
+        <h3>Watermark go-vn (chỉ admin thấy)</h3>
+        <div style="height:140px; background:#1a1a2a; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#888;">[Admin view with watermark]</div>
+      </div>
+      <div class="col">
+        <h3>Thời gian & Hành động</h3>
+        <div class="times">
+          <div><span data-i18n="onSlip">Trên phiếu</span>: <strong id="slip-time">19:50</strong></div>
+          <div><span data-i18n="expires">Hết hạn</span>: <strong id="expire-time">10:50</strong></div>
+        </div>
+        <button id="minus-2" data-i18n="minus2">Trừ 2 phút</button>
         <button id="action-btn">Tạo TwPay Card</button>
-        <div id="missing">Việc còn thiếu: Xác nhận đã nhận tiền</div>
+        <div id="missing-tasks" class="missing"></div>
+        <p style="font-size:0.85rem; color:#666; margin-top:1rem;">Nút gửi hiện ngay việc còn thiếu. Log admin + mã hóa PIN ở backend thật.</p>
       </div>
     </div>
   </main>
