@@ -1,4 +1,4 @@
-/* TaiwanPay V5 - Static Client Logic (i18n separated from business) */
+/* TaiwanPay V5 - Static Client Logic (i18n fully separated from business logic) */
 (function () {
   'use strict';
 
@@ -70,7 +70,7 @@
     }
   };
 
-  // Cashier sentence ALWAYS Traditional Chinese
+  // Cashier sentence ALWAYS Traditional Chinese — never translated
   const CASHIER_ZH = "我要繳費，條碼在這裡。";
 
   function setLang(lang) {
@@ -78,14 +78,14 @@
       const key = el.getAttribute('data-i18n');
       if (i18n[lang] && i18n[lang][key]) el.textContent = i18n[lang][key];
     });
-    // Force cashier text
+    // Force cashier text always Chinese
     const cashier = document.querySelector('.cashier-text');
     if (cashier) cashier.textContent = CASHIER_ZH;
     localStorage.setItem('tp_lang', lang);
     document.documentElement.lang = lang === 'zh' ? 'zh-TW' : lang;
   }
 
-  // Mock data
+  // Mock data — priority order: overdue, expiring, waiting, paid
   const mockOrders = [
     { id: 'TP-261014-001', status: 'overdue', slipTime: '19:50', expireTime: '10:50', amount: 15000, missing: 'Thiếu ảnh ARC', priority: 1, action: 'createCard' },
     { id: 'TP-261014-002', status: 'expiring', slipTime: '20:10', expireTime: '11:05', amount: 8000, missing: '', priority: 2, action: 'confirmPaid' },
@@ -116,13 +116,14 @@
       youPayEl.textContent = youPay.toLocaleString() + ' ₫';
       if (recipientEl) recipientEl.textContent = Math.max(0, recipient).toLocaleString() + ' NT$';
     }
-    document.getElementById('quote-status') && (document.getElementById('quote-status').textContent = locked ? i18n[currentLang].quoteLocked : i18n[currentLang].quoteOpen);
+    const statusEl = document.getElementById('quote-status');
+    if (statusEl) statusEl.textContent = locked ? i18n[currentLang].quoteLocked : i18n[currentLang].quoteOpen;
   }
 
   function initTimer() {
     const timerEl = document.getElementById('timer');
     if (!timerEl) return;
-    let seconds = 28 * 60 + 45; // demo under 30 min
+    let seconds = 28 * 60 + 45; // demo under 30 min → orange
     const tick = () => {
       if (seconds < 0) seconds = 0;
       const m = Math.floor(seconds / 60);
@@ -153,7 +154,6 @@
         document.getElementById('expire-time').textContent = o.expireTime;
         document.getElementById('action-btn').textContent = actionText;
         document.getElementById('missing-tasks').textContent = o.missing ? `${i18n[currentLang].missing}: ${o.missing}` : '';
-        // highlight selected
         document.querySelectorAll('.queue-item').forEach(el => el.style.outline = '');
         div.style.outline = '2px solid #ff6b00';
       };
@@ -173,6 +173,15 @@
     });
   }
 
+  function initBarcodes() {
+    if (typeof JsBarcode === 'undefined') return;
+    try {
+      JsBarcode("#barcode1", "151001K5G", { format: "CODE39", width: 2, height: 55, displayValue: true, fontSize: 12, margin: 4 });
+      JsBarcode("#barcode2", "00MRT261001ARMJK", { format: "CODE39", width: 1.6, height: 55, displayValue: true, fontSize: 11, margin: 4 });
+      JsBarcode("#barcode3", "035782000001150", { format: "CODE39", width: 1.8, height: 55, displayValue: true, fontSize: 12, margin: 4 });
+    } catch (e) { console.warn('Barcode init failed', e); }
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     const langSelect = document.getElementById('lang');
     if (langSelect) {
@@ -182,11 +191,10 @@
         currentLang = langSelect.value;
         setLang(currentLang);
         updateExchange();
-        initAdmin(); // refresh labels
+        initAdmin();
       });
     }
 
-    // Exchange direction
     document.getElementById('dir-tw-vn')?.addEventListener('click', (e) => {
       direction = 'twd-vnd';
       document.querySelectorAll('.direction button').forEach(b => b.classList.remove('active'));
@@ -206,7 +214,6 @@
       updateExchange();
     });
 
-    // Amount click to change demo
     document.getElementById('you-pay')?.addEventListener('click', () => {
       const input = prompt('Nhập số tiền (demo):', amount);
       if (input) { amount = parseInt(input) || amount; updateExchange(); }
@@ -215,14 +222,6 @@
     updateExchange();
     initTimer();
     initAdmin();
-
-    // Barcodes (if on payment page)
-    if (typeof JsBarcode !== 'undefined') {
-      try {
-        JsBarcode("#barcode1", "151001K5G", { format: "CODE39", width: 2, height: 50, displayValue: true });
-        JsBarcode("#barcode2", "00MRT261001ARMJK", { format: "CODE39", width: 1.8, height: 50, displayValue: true });
-        JsBarcode("#barcode3", "035782000001150", { format: "CODE39", width: 2, height: 50, displayValue: true });
-      } catch (e) { console.warn('Barcode init failed', e); }
-    }
+    initBarcodes();
   });
 })();

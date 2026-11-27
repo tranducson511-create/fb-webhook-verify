@@ -5,24 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TaiwanPay - Gửi tiền Đài Loan - Việt Nam</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
 </head>
 <body>
-  <header class="hero">
-    <div class="taipei-101"></div>
-    <div class="iphones">
-      <div class="iphone orange1"></div>
-      <div class="iphone orange2"></div>
-      <div class="iphone orange3"></div>
-    </div>
-    <div class="fog"></div>
-    <div class="logo-neon">TaiwanPay</div>
-    <p style="z-index:2; margin-top:0.5rem; opacity:0.8;" data-i18n="desc">Gửi tiền nhanh chóng giữa Đài Loan và Việt Nam.</p>
-    <a href="exchange.html" class="btn-orange" data-i18n="cta">Gửi tiền ngay</a>
-  </header>
   <nav>
-    <a href="index.html" data-i18n="home">Trang chủ</a>
-    <a href="exchange.html" data-i18n="exchange">Đổi tiền</a>
-    <a href="payment.html" data-i18n="payment">Thẻ thanh toán</a>
+    <a href="#hero" data-i18n="home">Trang chủ</a>
+    <a href="#exchange" data-i18n="exchange">Đổi tiền</a>
+    <a href="#payment" data-i18n="payment">Thẻ thanh toán</a>
     <a href="admin.html" data-i18n="admin">Admin</a>
     <select id="lang">
       <option value="vi">Tiếng Việt</option>
@@ -32,10 +21,57 @@
       <option value="th">ภาษาไทย</option>
     </select>
   </nav>
-  <main style="padding:2rem; text-align:center;">
-    <h1 data-i18n="welcome">Chào mừng đến TaiwanPay</h1>
-    <p style="margin-top:1rem; color:#aaa;">Bản V5 static — sẵn sàng deploy lên Hostinger public_html qua File Manager.</p>
-  </main>
+
+  <header class="hero" id="hero">
+    <div class="taipei-101"></div>
+    <div class="iphones">
+      <div class="iphone orange1"></div>
+      <div class="iphone orange2"></div>
+      <div class="iphone orange3"></div>
+    </div>
+    <div class="fog"></div>
+    <div class="logo-neon">TaiwanPay</div>
+    <p style="z-index:2; margin-top:0.5rem; opacity:0.85; max-width:520px; text-align:center;" data-i18n="desc">Gửi tiền nhanh chóng giữa Đài Loan và Việt Nam.</p>
+    <a href="#exchange" class="btn-orange" data-i18n="cta">Gửi tiền ngay</a>
+  </header>
+
+  <section id="exchange" class="exchange">
+    <h2 data-i18n="exchangeTitle">Đổi tiền</h2>
+    <div class="direction">
+      <button id="dir-tw-vn" class="active" data-i18n="twToVn">Đài → Việt</button>
+      <button id="dir-vn-tw" data-i18n="vnToTw">Việt → Đài</button>
+    </div>
+    <div class="amount-large" id="you-pay">10150 NT$</div>
+    <div class="labels">
+      <span data-i18n="youPay">Bạn trả</span>
+      <span data-i18n="fee">Phí NT$150</span>
+      <span id="recipient-amount">8,200,000 ₫</span>
+      <span data-i18n="recipient">Người nhận</span>
+    </div>
+    <div class="quote-lock">
+      <button id="lock-quote" data-i18n="lockQuote">Khóa báo giá</button>
+      <span id="quote-status" style="margin-left:0.8rem; color:#aaa;"></span>
+    </div>
+    <p id="rate-info">Tỷ giá demo: 1 NT$ ≈ 820 VND · Phí cố định NT$150</p>
+    <button class="btn-orange" style="margin-top:1.5rem;" onclick="document.getElementById('payment').scrollIntoView({behavior:'smooth'})">Tiếp tục thanh toán</button>
+  </section>
+
+  <section id="payment" class="payment-card">
+    <h2 data-i18n="paymentTitle">Thẻ thanh toán</h2>
+    <div class="barcode-container">
+      <svg id="barcode1"></svg>
+      <svg id="barcode2"></svg>
+      <svg id="barcode3"></svg>
+    </div>
+    <button class="btn-white" data-i18n="showStaff">Đưa màn hình cho nhân viên</button>
+    <div class="cashier-text">我要繳費，條碼在這裡。</div>
+    <div class="timer" id="timer">28:45</div>
+    <p style="color:#aaa; font-size:0.9rem;">Đồng hồ đếm ngược đúng phút · <30 phút cam · <5 phút đỏ</p>
+  </section>
+
+  <footer style="text-align:center; padding:2rem; color:#666; font-size:0.85rem;">
+    TaiwanPay V5 static · Sẵn sàng deploy Hostinger public_html qua File Manager
+  </footer>
   <script src="app.js"></script>
 </body>
 </html>
